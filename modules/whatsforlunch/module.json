@@ -1,0 +1,5 @@
+{
+  "jshint": "./js",
+  "css": "./css",
+  "hogan": "./templates"
+}

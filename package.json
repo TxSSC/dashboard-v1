@@ -1,0 +1,22 @@
+{
+  "name": "txssc-dashboard",
+  "version": "0.0.1",
+  "author": "TxSSC",
+  "description": "simple js dashboard for all TxSSC apis",
+  "contributors": [
+    {
+      "name": "",
+      "email": ""
+    },
+    {
+      "name": "",
+      "email": ""
+    }
+  ],
+  "dependencies" : {
+    "grunt"   : ">=0.0.0",
+    "hogan.js": ">=0.0.0",
+    "rimraf": ">=0.0.0",
+    "stylus": ">=0.0.0"
+  }
+}

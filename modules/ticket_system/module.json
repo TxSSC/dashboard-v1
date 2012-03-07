@@ -1,0 +1,12 @@
+ {
+  "module_paths":
+  {
+    "javascript": "./tickets.js",
+    "templates": "./templates",
+    "css": "./css/ticket.css"
+  },
+  "watch":
+  [
+    "javascript", "css"
+  ]
+ }
