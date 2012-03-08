@@ -1,12 +1,12 @@
  {
-  "module_paths":
+  "module": "Ticket System",
+  "window": true,
+  "main": true,
+  "tasks":
   {
-    "javascript": "./tickets.js",
-    "templates": "./templates",
-    "css": "./css/ticket.css"
-  },
-  "watch":
-  [
-    "javascript", "css"
-  ]
- }
+    "coffee": "./js",
+    "hogan": "./templates",
+    "mincss": "./css",
+    "lint": true
+  }
+}

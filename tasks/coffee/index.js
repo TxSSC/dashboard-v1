@@ -12,17 +12,22 @@ task.registerBasicTask("coffee", "Compile coffee files to js", function(data, na
   });
 });
 
-task.registerHelper('coffee', function(filepath, callback) {
-
-  console.dir(arguments);
-
+task.registerHelper('coffee', function(filepath) {
   var coffee = require('coffee-script');
 
-  try {
-    var js = coffee.compile(file.read(filepath));
-    if (js) file.write(filepath.replace(/\.coffee$/, '.js'), js);
+  if(filepath.match(/\.coffee$/i)) {
+    var compiled,
+        dest = filepath.replace(/\.coffee$/, '.js');
+
+    try {
+      compiled = coffee.compile(file.read(filepath));
+      file.write(dest, compiled);
+    }
+    catch (e) {
+      log.error(e.message);
+    }
   }
-  catch (e) {
-    log.error(e.message);
+  else {
+    log.error('Attempted to compile non-coffescript file.');
   }
 });

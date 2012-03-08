@@ -1,11 +1,18 @@
 config.init({
-  modules: {
-    dir: 'modules/',
-    tasks: [ 'test'
-    ]
+
+  modules:
+  {
+    dir: 'modules/'
   },
-  clean: {
+
+  clean:
+  {
     folder: 'build/'
+  },
+
+  coffee:
+  {
+    folder: 'support/*'
   }
 
 });
