@@ -1,5 +1,9 @@
-{
-  "jshint": "./js",
-  "css": "./css",
-  "hogan": "./templates"
+ {
+  "name": "Whats for lunch",
+  "tasks":
+  {
+    "coffee": "scripts/",
+    "hogan": "templates/",
+    "mincss": "css/"
+  }
 }

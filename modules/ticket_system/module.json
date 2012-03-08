@@ -1,12 +1,9 @@
  {
-  "module": "Ticket System",
-  "window": true,
-  "main": true,
+  "name": "Ticket System",
   "tasks":
   {
-    "coffee": "./js",
-    "hogan": "./templates",
-    "mincss": "./css",
-    "lint": true
+    "coffee": "scripts/",
+    "hogan": "templates/",
+    "mincss": "css/"
   }
 }

@@ -2,32 +2,42 @@
  * Adapted from
  * https://gist.github.com/1820595
  */
+var path = require('path');
+
 
 task.registerBasicTask("coffee", "Compile coffee files to js", function(data, name) {
 
   var files = file.expand(data);
 
-  files.forEach(function(filepath) {
-      task.helper('coffee', filepath);
-  });
+  task.helper('coffee', files, path.resolve(path.dirname(data)));
 });
 
-task.registerHelper('coffee', function(filepath) {
-  var coffee = require('coffee-script');
 
-  if(filepath.match(/\.coffee$/i)) {
-    var compiled,
-        dest = filepath.replace(/\.coffee$/, '.js');
+/*
+ * Compile each file from the files array
+ */
+task.registerHelper('coffee', function(files, dest_dir) {
+  var coffee = require('coffee-script'),
+      new_files = [];
 
+  //Long chain to do all the things
+  files.filter(function(file) {
+    return file.match(/\.coffee$/) ? true : false;
+  }).forEach(function(script) {
+
+    //Compile and write each file to the dest dir or log error
     try {
-      compiled = coffee.compile(file.read(filepath));
+      var compiled = coffee.compile(file.read(script)),
+          dest = path.join(dest_dir, path.basename(script, '.coffee') + '.js');
+
+      new_files.push(dest);
       file.write(dest, compiled);
     }
     catch (e) {
-      log.error(e.message);
+      log.error('Compilation error: ' + e.message);
     }
-  }
-  else {
-    log.error('Attempted to compile non-coffescript file.');
-  }
+
+  });
+
+  return new_files;
 });
