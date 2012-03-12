@@ -1,9 +1,0 @@
- {
-  "name": "Whats for lunch",
-  "tasks":
-  {
-    "coffee": "scripts/",
-    "hogan": "templates/",
-    "mincss": "css/"
-  }
-}

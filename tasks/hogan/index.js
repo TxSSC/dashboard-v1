@@ -41,7 +41,7 @@ task.registerHelper('hogan', function(files) {
     var openedFile = task.directive(filepath, file.read);
     if (!openedFile) return;
     var name = filepath.split('/');
-    name = name[name.length - 1].split('.html')[0];
+    name = name[name.length - 1].replace(/.html$/i, '');
     return 'window.T.' + name + ' = new Hogan.Template(' + hogan.compile(openedFile, { asString: 1 }) + ');';
   }).filter(function (t) {
     return t;
@@ -61,7 +61,7 @@ task.registerBasicTask('removeHogan', 'Remove precompiled templates', function(d
   var files = file.expand(data),
       len = files.length,
       done = this.async();
-  
+
   for(var i=0; i<len; i++) {
     fs.unlink(files[i], function(err) {
       if(err) {

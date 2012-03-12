@@ -1,9 +1,0 @@
- {
-  "name": "Ticket System",
-  "tasks":
-  {
-    "coffee": "scripts/",
-    "hogan": "templates/",
-    "mincss": "css/"
-  }
-}
