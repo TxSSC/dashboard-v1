@@ -2,16 +2,12 @@ config.init({
 
   buildDir: 'release/',
 
-  meta: {
-    banner: 'derp'
-  },
-
   modules: {
     folder: 'modules/'
   },
 
   clean: {
-    folder: 'release/**',
+    release: 'release/**',
     compiled: [
       'app/ModularView.js',
       'app/ViewFactory.js'
@@ -53,5 +49,8 @@ config.init({
 });
 
 
-task.registerTask('default', 'clean modules coffee hogan mincss concat');
+task.registerTask(
+  'default',
+  'clean:release modules coffee hogan mincss concat clean:compiled'
+);
 task.registerTask('dev', 'server watch');
