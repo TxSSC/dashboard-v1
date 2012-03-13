@@ -65,7 +65,8 @@ task.registerBasicTask('modules', 'Compile modules modules/build/', function(dat
    */
   file.write(buildDir + '/module-styles.css', task.helper('concat', styles));
 
-
+  //Clean up cacheDir
+  task.helper('clean-modules');
   //Return from task
   return task.hadErrors() ? false : true;
 });
@@ -136,14 +137,14 @@ task.registerHelper('modules', function(modulePath) {
  * directory.
  * Requires the clean task to the present, and modules
  */
-task.registerBasicTask('clean-modules', 'Cleans up the build dir in modules', function() {
+task.registerHelper('clean-modules', function() {
   var dir = path.resolve(config('modules').folder + '/tmp-build');
 
   if(!dir) {
     log.error('clean-modules directory is undefined, this could be bad.');
   }
   else {
-    console.dir('deleting: ' + dir);
-    //task.helper('clean', dir);
+    log.writeln('Cleaning up: ' + dir);
+    task.helper('clean', dir);
   }
 });

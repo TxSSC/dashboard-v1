@@ -7,7 +7,7 @@ config.init({
   },
 
   clean: {
-    folder: 'release/',
+    folder: 'release/**',
     compiled: [
       'app/ModularView.js',
       'app/ViewFactory.js'

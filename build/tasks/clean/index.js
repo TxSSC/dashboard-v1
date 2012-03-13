@@ -1,25 +1,18 @@
 /*
- * https://github.com/tbranyen/build-tasks/blob/master/clean/index.js
  * Adapted from
+ * https://github.com/tbranyen/build-tasks/blob/master/clean/index.js
  */
-
+var rimraf = require("rimraf");
 
 
 task.registerBasicTask("clean", "Deletes out all contents in a directory", function(data, name) {
-  var folder = path.resolve(data);
+  var files = file.expand(data);
 
-  console.dir(folder);
-
-  // Delete all files inside the folder
-  task.helper("clean", folder);
+  task.helper("clean", files);
 });
 
-// ============================================================================
-// HELPERS
-// ============================================================================
+task.registerHelper("clean", function(paths) {
 
-task.registerHelper("clean", function(folder) {
-  var rimraf = require("rimraf");
-
-  //rimraf.sync(folder);
+  console.log(paths);
+  //rimraf.sync(paths);
 });
