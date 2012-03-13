@@ -7,21 +7,41 @@ config.init({
   },
 
   clean: {
-    folder: 'release/'
+    folder: 'release/',
+    compiled: [
+      'app/ModularView.js',
+      'app/ViewFactory.js'
+    ]
   },
 
   coffee: {
-    folder: 'app/source/*.coffee'
+    folder: 'app/*.coffee'
+  },
+
+  hogan: {
+    'release/templates.js': 'app/templates/*.html'
+  },
+
+  mincss: {
+    'release/style.css': [
+      'assets/css/*.css'
+    ]
   },
 
   concat: {
-    'release/release.js': 'app/*.js',
-    'release/style.css': 'app/*.css'
+    'release/app.js': [
+      'app/*.js'
+    ]
+  },
+
+  server: {
+    release: {
+      'app': 'release/',
+      'app/templates': 'release/templates'
+    }
   }
 
 });
 
-
-//task.registerTask('default', 'clean modules');
-
-task.registerTask('serve', 'server');
+//FUCK CLEAN
+task.registerTask('default', 'modules coffee hogan mincss concat');
