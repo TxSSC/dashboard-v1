@@ -20,7 +20,9 @@ var hogan = require('hogan.js'),
 task.registerBasicTask('hogan', 'Compile templates with hogan.js',
 function(data, name) {
   var files = file.expand(data);
-  file.write(name, task.helper('hogan', files));
+  file.write(name,
+      'window.Templates = window.Templates || {};\n\n' +
+        task.helper('hogan', files));
 
   // Fail task if errors were logged.
   if (task.hadErrors()) { return false; }
@@ -42,15 +44,12 @@ task.registerHelper('hogan', function(files) {
     if (!openedFile) return;
     var name = filepath.split('/');
     name = name[name.length - 1].replace(/.html$/i, '');
-    return 'window.T.' + name + ' = new Hogan.Template(' + hogan.compile(openedFile, { asString: 1 }) + ');';
-  }).filter(function (t) {
-    return t;
+    return 'window.Templates.' + name + ' = new Hogan.Template(' + hogan.compile(openedFile, { asString: 1 }) + ');';
+  }).filter(function(t) {
+    return typeof(t) !== 'undefined' && t.length;
   }).join('\n') : '';
 
-  var ret = "\nwindow.T = {};\n";
-  ret += src;
-
-  return ret;
+  return src;
 });
 
 /**

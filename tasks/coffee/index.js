@@ -18,7 +18,7 @@ task.registerBasicTask("coffee", "Compile coffee files to js", function(data, na
  */
 task.registerHelper('coffee', function(files, dest_dir) {
   var coffee = require('coffee-script'),
-      new_files = [];
+      jsFiles = [];
 
   //Long chain to do all the things
   files.filter(function(file) {
@@ -30,7 +30,7 @@ task.registerHelper('coffee', function(files, dest_dir) {
       var compiled = coffee.compile(file.read(script)),
           dest = path.join(dest_dir, path.basename(script, '.coffee') + '.js');
 
-      new_files.push(dest);
+      jsFiles.push(dest);
       file.write(dest, compiled);
     }
     catch (e) {
@@ -39,5 +39,5 @@ task.registerHelper('coffee', function(files, dest_dir) {
 
   });
 
-  return new_files;
+  return jsFiles;
 });
