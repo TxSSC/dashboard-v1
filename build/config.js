@@ -2,6 +2,10 @@ config.init({
 
   buildDir: 'release/',
 
+  meta: {
+    banner: 'derp'
+  },
+
   modules: {
     folder: 'modules/'
   },
@@ -34,10 +38,15 @@ config.init({
     ]
   },
 
+  watch: {
+      files: [ '<config:modules.folder>/**', 'app/*' ],
+      tasks: 'modules coffee hogan concat'
+  },
+
   server: {
     release: {
       'app': 'release/',
-      'app/templates': 'release/templates'
+      'app/modules': 'release/modules/'
     }
   }
 
@@ -45,3 +54,4 @@ config.init({
 
 
 task.registerTask('default', 'clean modules coffee hogan mincss concat');
+task.registerTask('dev', 'server watch');
