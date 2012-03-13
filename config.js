@@ -1,13 +1,13 @@
 config.init({
 
-  build_dir: 'release/',
+  buildDir: 'release/',
 
   modules: {
-    dir: 'modules/'
+    folder: 'modules/'
   },
 
   clean: {
-    folder: 'build/'
+    folder: 'release/'
   },
 
   coffee: {
@@ -15,21 +15,8 @@ config.init({
   },
 
   concat: {
-    'release/release.js': 'release/modules/js/*.js',
-    'release/module_styles.css': 'release/modules/css/*.css',
-    'release/templates.js': 'release/modules/templates/*.hogan'
-    // dist: {
-    //   src: 'release/modules/*.js',
-    //   dest: 'release/release.js'
-    // },
-    // css: {
-    //   src: 'release/modules/*.css',
-    //   dest: 'release/style.css'
-    // },
-    // templates: {
-    //   src: 'release/modules/*.hogan',
-    //   dest: 'release/templates.js'
-    // }
+    'release/release.js': 'app/*.js',
+    'release/style.css': 'app/*.css'
   }
 
 });
