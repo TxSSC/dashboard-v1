@@ -1,0 +1,2 @@
+waldo = () ->
+  console.log 'HELLO'
