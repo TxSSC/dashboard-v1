@@ -144,7 +144,6 @@ task.registerHelper('clean-modules', function() {
     log.error('clean-modules directory is undefined, this could be bad.');
   }
   else {
-    log.writeln('Cleaning up: ' + dir);
     task.helper('clean', dir);
   }
 });

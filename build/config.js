@@ -43,5 +43,5 @@ config.init({
 
 });
 
-//FUCK CLEAN
-task.registerTask('default', 'modules coffee hogan mincss concat');
+
+task.registerTask('default', 'clean modules coffee hogan mincss concat');

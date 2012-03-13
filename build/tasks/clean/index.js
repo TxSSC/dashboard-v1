@@ -8,11 +8,15 @@ var rimraf = require("rimraf");
 task.registerBasicTask("clean", "Deletes out all contents in a directory", function(data, name) {
   var files = file.expand(data);
 
-  task.helper("clean", files);
+  files.forEach(function(file) {
+    task.helper("clean", file);
+  });
+
+  return task.hadErrors() ? false : true;
 });
 
-task.registerHelper("clean", function(paths) {
 
-  console.log(paths);
-  //rimraf.sync(paths);
+task.registerHelper("clean", function(path) {
+  log.writeln('Removing: ' + path);
+  rimraf.sync(path);
 });
