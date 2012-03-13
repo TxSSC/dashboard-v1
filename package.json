@@ -1,8 +1,8 @@
 {
-  "name": "grunt-module-builder",
+  "name": "TxSSC-Dashboard",
   "version": "0.0.1",
-  "author": "vanetix",
-  "description": "build modules with grunt",
+  "author": "TxSSC",
+  "description": "Who needs this?",
   "dependencies" : {
     "grunt"   : ">=0.0.0",
     "hogan.js": ">=0.0.0",

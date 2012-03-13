@@ -11,7 +11,7 @@ config.init({
   },
 
   coffee: {
-    folder: 'app/*'
+    folder: 'app/source/*.coffee'
   },
 
   concat: {
@@ -22,4 +22,6 @@ config.init({
 });
 
 
-task.registerTask('default', 'clean modules concat');
+//task.registerTask('default', 'clean modules');
+
+task.registerTask('serve', 'server');

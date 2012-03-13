@@ -8,6 +8,9 @@ task.registerBasicTask('modules', 'Compile modules modules/build/', function(dat
       cacheDir = path.join(moduleDir, 'tmp-build/'),
       buildDir = path.resolve(config('buildDir') + '/modules');
 
+  //Requires config('buildDir')
+  config.requires('buildDir');
+
   /*
    * Iterate over every module directory with the exception of
    * tmp-build

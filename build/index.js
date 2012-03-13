@@ -6,7 +6,7 @@ var taskList = fs.readdirSync(__dirname + '/tasks').filter(function(task) {
   return fs.statSync(__dirname + '/tasks/' + task).isDirectory();
 }).map(function(task) {
   return 'tasks/' + task;
-});//.concat('tasks');
+});
 
 
 grunt.cli({
