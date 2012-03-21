@@ -1,0 +1,157 @@
+/* -------- Global styles -------- */
+body {
+  background-image: url('/assets/img/black_linen_v2.png');
+  background-repeat: repeat;
+  height: 100%;
+}
+
+.container-fluid {
+  padding: 0 0;
+  height: 100%;
+}
+
+
+/* -------- Module containers -------- */
+
+.module {
+  margin: 10px 4px;
+  padding: 14px 14px 18px 14px;
+  background-color: white;
+  background-image: url('/assets/img/paper_1.png');
+  border-style: none;
+  border-radius: 8px;
+  -webkit-box-shadow: 4px 2px 6px 3px #222222;
+  box-shadow: 4px 2px 6px 3px #222222;
+  float: left;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #444;
+}
+
+  .module h1 {
+    color: black;
+    font-size: 20px;
+    margin-bottom: 10px;
+    padding-bottom: 4px;
+    border-bottom: solid 1px #000;
+  }
+
+  .module p {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .module:after, .module:before {
+    content: "";
+    clear: all;
+  }
+
+
+/* ----------------------- Unique module styles ---------------------------- */
+
+/* --------------- lunch module ---------------- */
+#lunch {
+  width: 288px;
+}
+
+  #lunch .ranking {
+    list-style-type: decimal;
+    list-style-position: inside;
+    margin: 4px 4px;
+  }
+
+    #lunch .ranking li:first-child {
+      background: -moz-linear-gradient(top, rgba(235,241,246,1) 0%, rgba(171,211,238,1) 50%, rgba(137,195,235,1) 51%, rgba(213,235,251,1) 100%); /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(235,241,246,1)), color-stop(50%,rgba(171,211,238,1)), color-stop(51%,rgba(137,195,235,1)), color-stop(100%,rgba(213,235,251,1))); /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(top, rgba(235,241,246,1) 0%,rgba(171,211,238,1) 50%,rgba(137,195,235,1) 51%,rgba(213,235,251,1) 100%); /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(top, rgba(235,241,246,1) 0%,rgba(171,211,238,1) 50%,rgba(137,195,235,1) 51%,rgba(213,235,251,1) 100%); /* Opera 11.10+ */
+      background: -ms-linear-gradient(top, rgba(235,241,246,1) 0%,rgba(171,211,238,1) 50%,rgba(137,195,235,1) 51%,rgba(213,235,251,1) 100%); /* IE10+ */
+      background: linear-gradient(top, rgba(235,241,246,1) 0%,rgba(171,211,238,1) 50%,rgba(137,195,235,1) 51%,rgba(213,235,251,1) 100%); /* W3C */
+    }
+
+    #lunch .ranking li {
+      padding: 6px 6px;
+      margin: 5px auto;
+      border-style: none;
+      border-radius: 4px;
+      -webkit-box-shadow: 2px 1px 2px #222222;
+      box-shadow: 2px 1px 2px #222222;
+      background: -moz-linear-gradient(top, rgba(246,248,249,1) 0%, rgba(229,235,238,1) 50%, rgba(215,222,227,1) 51%, rgba(245,247,249,1) 100%); /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(246,248,249,1)), color-stop(50%,rgba(229,235,238,1)), color-stop(51%,rgba(215,222,227,1)), color-stop(100%,rgba(245,247,249,1))); /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(top, rgba(246,248,249,1) 0%,rgba(229,235,238,1) 50%,rgba(215,222,227,1) 51%,rgba(245,247,249,1) 100%); /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(top, rgba(246,248,249,1) 0%,rgba(229,235,238,1) 50%,rgba(215,222,227,1) 51%,rgba(245,247,249,1) 100%); /* Opera 11.10+ */
+      background: -ms-linear-gradient(top, rgba(246,248,249,1) 0%,rgba(229,235,238,1) 50%,rgba(215,222,227,1) 51%,rgba(245,247,249,1) 100%); /* IE10+ */
+      background: linear-gradient(top, rgba(246,248,249,1) 0%,rgba(229,235,238,1) 50%,rgba(215,222,227,1) 51%,rgba(245,247,249,1) 100%); /* W3C */
+    }
+
+  #lunch .votees {
+    list-style: none;
+    margin: -4px 4px;
+  }
+
+    #lunch .votees  li {
+      display: inline;
+      float: left;
+      padding: 6px 6px;
+      margin: 4px 2px;
+      border-style: none;
+      border-radius: 4px;
+      background: -moz-linear-gradient(top, rgba(180,227,145,1) 0%, rgba(97,196,25,1) 50%, rgba(180,227,145,1) 100%); /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(180,227,145,1)), color-stop(50%,rgba(97,196,25,1)), color-stop(100%,rgba(180,227,145,1))); /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(top, rgba(180,227,145,1) 0%,rgba(97,196,25,1) 50%,rgba(180,227,145,1) 100%); /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(top, rgba(180,227,145,1) 0%,rgba(97,196,25,1) 50%,rgba(180,227,145,1) 100%); /* Opera 11.10+ */
+      background: -ms-linear-gradient(top, rgba(180,227,145,1) 0%,rgba(97,196,25,1) 50%,rgba(180,227,145,1) 100%); /* IE10+ */
+      background: linear-gradient(top, rgba(180,227,145,1) 0%,rgba(97,196,25,1) 50%,rgba(180,227,145,1) 100%); /* W3C */
+    }
+
+
+/* --------- Ticket System -------------- */
+#tickets {
+  width: 460px;
+}
+
+  #tickets .stats {
+    margin-bottom: 0;
+  }
+
+    #tickets .stats td {
+      border-color: #888;
+    }
+
+    #tickets .stats tr:hover td {
+      background-color: transparent;
+    }
+
+
+/* ---------- Weather panel ------------ */
+#weather {
+  width: 460px;
+}
+
+  #weather .day {
+    float: left;
+    margin: 0 6px;
+    padding: 0 6px;
+    width: 42%;
+  }
+
+    #weather .day h1 {
+      font-size: 16px;
+      padding: 0 0;
+      line-height: 24px;
+      border-color: #444;
+      color: #222;
+    }
+
+  #weather .forecast {
+    margin: 0 auto;
+  }
+
+  #weather ul {
+    list-style: none;
+    margin: 0 0;
+  }
+
+    #weather ul li {
+      padding: 2px 2px;
+      text-shadow: 0 0 1px #444;
+    }

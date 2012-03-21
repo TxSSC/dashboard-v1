@@ -1,0 +1,1 @@
+- closed ticket stats assume that the ticke twas closed by it's creator
