@@ -10,7 +10,8 @@ config.init({
     release: 'release/**',
     compiled: [
       'app/ModularView.js',
-      'app/ViewFactory.js'
+      'app/ViewFactory.js',
+      'app/Main.js'
     ]
   },
 
@@ -35,14 +36,13 @@ config.init({
   },
 
   watch: {
-      files: [ '<config:modules.folder>/**', 'app/*' ],
-      tasks: 'modules coffee hogan concat'
+      files: [ 'modules/**', 'app/*' ],
+      tasks: 'modules coffee hogan concat clean:compiled'
   },
 
   server: {
-    release: {
-      'app': 'release/',
-      'app/modules': 'release/modules/'
+    dev: {
+      'app': 'release/'
     }
   }
 
@@ -53,4 +53,4 @@ task.registerTask(
   'default',
   'clean:release modules coffee hogan mincss concat clean:compiled'
 );
-task.registerTask('dev', 'server watch');
+task.registerTask('dev', 'server:dev watch');

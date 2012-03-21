@@ -1,3 +1,3 @@
 (function() {
-  console.log(hello);
+  console.log('hi world');
 }).call(this);
