@@ -21,7 +21,7 @@ task.registerBasicTask('hogan', 'Compile templates with hogan.js',
 function(data, name) {
   var files = file.expand(data);
   file.write(name,
-      'window.Templates = window.Templates || {};\n\n' +
+      'window.Templates = window.Templates || {};\n' +
         task.helper('hogan', files));
 
   // Fail task if errors were logged.
