@@ -1,0 +1,20 @@
+/* --------- Ticket System styles -------------- */
+#tickets {
+  width: 460px;
+}
+
+  #tickets .stats {
+    margin-bottom: 0;
+  }
+
+    #tickets .stats th {
+      color: #000;
+    }
+
+    #tickets .stats td {
+      border-color: #888;
+    }
+
+    #tickets .stats tr:hover td {
+      background-color: transparent;
+    }

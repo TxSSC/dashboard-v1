@@ -1,0 +1,35 @@
+/* ---------- Weather panel styles ------------ */
+#weather {
+  width: 480px;
+}
+
+  #weather .day {
+    float: left;
+    margin: 0 0;
+    margin-right: 6px;
+    padding: 0 0;
+    padding-right: 6px;
+    width: 46%;
+  }
+
+    #weather .day h1 {
+      font-size: 16px;
+      padding: 0 0;
+      line-height: 24px;
+      border-color: #444;
+      color: #222;
+    }
+
+  #weather .forecast {
+    margin: 0 auto;
+  }
+
+  #weather ul {
+    list-style: none;
+    margin: 0 0;
+  }
+
+    #weather ul li {
+      padding: 2px 2px;
+      text-shadow: 0 0 1px #444;
+    }
