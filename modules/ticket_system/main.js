@@ -1,13 +1,10 @@
 (function() {
-  // Create the new lunch module
-  var Tickets = { Models: {}, Views: {}, Collections: {} };
-
   /*
    * Dummy model for users
    */
-  Tickets.Models.User = Backbone.Model.extend({});
-  Tickets.Collections.Users = Backbone.Collection.extend({
-    model: Tickets.Models.User,
+  var User = Backbone.Model.extend({});
+  var Users = Backbone.Collection.extend({
+    model: User,
     url: '/ticket-proxy/api/users',
 
     initialize: function() {
@@ -35,14 +32,14 @@
   /*
    * Dummy ticket model, just used to hold dataz
    */
-  Tickets.Models.Ticket = Backbone.Model.extend({});
+  var Ticket = Backbone.Model.extend({});
 
   /*
    * The collection for the ticket module
    * Polls the server every 10 seconds
    */
-  Tickets.Collections.Tickets = Backbone.Collection.extend({
-    model: Tickets.Models.Ticket,
+  var Tickets = Backbone.Collection.extend({
+    model: Ticket,
     url: '/ticket-proxy/api/tickets',
 
     initialize: function() {
@@ -68,15 +65,15 @@
   });
 
 
-  Tickets.Views.Main = Backbone.View.extend({
+  var MainView = Backbone.View.extend({
 
     tagName: 'div',
     id: 'tickets',
     className: 'module',
 
     initialize: function() {
-      this.tickets = new Tickets.Collections.Tickets();
-      this.users = new Tickets.Collections.Users();
+      this.tickets = new Tickets();
+      this.users = new Users();
 
       //Rerender on fetch
       this.tickets.on('fetch', this.checkCollectionStatus, this);
@@ -139,6 +136,6 @@
   });
 
 
-  return Tickets.Views.Main;
+  return MainView;
 
 }).call(this);
