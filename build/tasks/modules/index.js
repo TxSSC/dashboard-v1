@@ -76,7 +76,7 @@ task.registerBasicTask('modules', 'Compile modules modules/build/', function(dat
  * Helper that compiles the specified module
  */
 task.registerHelper('modules', function(modulePath) {
-  var source = path.join(modulePath, 'module.coffee'),
+  var source = path.join(modulePath, 'main.coffee'),
       style = path.join(modulePath, 'style.css'),
       templates = file.expand(modulePath + '/templates/*.html'),
       cacheDir = path.join(modulePath, '../tmp-build'),
@@ -99,14 +99,14 @@ task.registerHelper('modules', function(modulePath) {
     fs.renameSync(source, path.join(path.dirname(source), moduleName) + '.js');
   }
   else {
-    source = path.join(modulePath, 'module.js');
+    source = path.join(modulePath, 'main.js');
 
     if(path.existsSync(source)) {
       //Copy js
-      file.copy(source, path.join(cacheDir, 'module.js'));
+      file.copy(source, path.join(cacheDir, 'main.js'));
 
       //Rename the compiled file to [moduleName].js
-      fs.renameSync(path.join(cacheDir, 'module.js'), path.join(cacheDir, moduleName) + '.js');
+      fs.renameSync(path.join(cacheDir, 'main.js'), path.join(cacheDir, moduleName) + '.js');
     }
     else {
       log.error('No sources found in - ' + modulePath);
@@ -118,7 +118,7 @@ task.registerHelper('modules', function(modulePath) {
    */
   if(templates && templates.length) {
     //Compile templates
-    file.write(path.join(cacheDir, moduleName) + '.hogan', task.helper('hogan', templates));
+    file.write(path.join(cacheDir, moduleName) + '.hogan', task.helper('hogan', templates, moduleName));
   }
 
   /*

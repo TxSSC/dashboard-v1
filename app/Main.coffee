@@ -1,10 +1,14 @@
 $(document).ready () ->
   window.Dashboard = { Views: [], Models: [], Collections: [] }
 
+  container = $('#main')
+
+  container.masonry({ isAnimated: true })
+
   Object.keys(modules).forEach (module) ->
-    console.log modules[module]
-    if typeof modules[module] is 'object' and modules[module].View
-      newView = new modules[module].View()
+    if typeof modules[module] is 'function'
+      newView = new modules[module]()
       Dashboard.Views.push newView
-      newView.render (el) ->
-        $(body).append el
+      container.append newView.render().el
+
+  container.masonry('reload');

@@ -9,8 +9,6 @@ config.init({
   clean: {
     release: 'release/**',
     compiled: [
-      'app/ModularView.js',
-      'app/ViewFactory.js',
       'app/Main.js'
     ]
   },
@@ -25,7 +23,9 @@ config.init({
 
   mincss: {
     'release/style.css': [
-      'assets/css/*.css'
+      'assets/css/bootstrap.css',
+      'assets/css/bootstrap-responsive.css',
+      'assets/css/style.css'
     ]
   },
 
@@ -36,8 +36,8 @@ config.init({
   },
 
   watch: {
-      files: [ 'modules/**', 'app/*' ],
-      tasks: 'modules coffee hogan concat clean:compiled'
+      files: [ 'modules/**', 'app/*', 'assets/**' ],
+      tasks: 'modules coffee hogan mincss concat clean:compiled'
   },
 
   server: {

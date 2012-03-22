@@ -38,13 +38,19 @@ function(data, name) {
  * https://github.com/twitter/hogan.js/blob/master/bin/hulk
  */
 
-task.registerHelper('hogan', function(files) {
+task.registerHelper('hogan', function(files, namespace) {
   var src = files ? files.map(function(filepath) {
     var openedFile = task.directive(filepath, file.read);
     if (!openedFile) return;
     var name = filepath.split('/');
+
     name = name[name.length - 1].replace(/.html$/i, '');
-    return 'window.Templates.' + name + ' = new Hogan.Template(' + hogan.compile(openedFile, { asString: 1 }) + ');';
+    return namespace ?
+      'window.Templates.' + namespace + ' = window.Templates.' + namespace + ' || {};\n' +
+      'window.Templates.' + namespace + '.' + name + ' = new Hogan.Template(' +
+        hogan.compile(openedFile, { asString: 1 }) + ');'
+      :
+      'window.Templates.' + name + ' = new Hogan.Template(' + hogan.compile(openedFile, { asString: 1 }) + ');';
   }).filter(function(t) {
     return typeof(t) !== 'undefined' && t.length;
   }).join('\n') : '';

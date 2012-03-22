@@ -1,25 +1,9 @@
-define([
-  "namespace",
-
-  //Libs
-  "use!backbone",
-  "use!hogan"
-
-  //Modules
-
-  //Plugins
-],
-
-function(namespace, Backbone, Hogan) {
-
-  // Create the new lunch module
-  var Lunch = namespace.module();
-
+(function() {
   /*
    * The model for the lunch module
    * Polls the server every 10 seconds
    */
-  Lunch.Model = Backbone.Model.extend({
+  var Lunch = Backbone.Model.extend({
     url: '/lunch-proxy/lunch',
 
     initialize: function() {
@@ -37,37 +21,30 @@ function(namespace, Backbone, Hogan) {
   });
 
 
-  Lunch.Views.Main = namespace.ModuleView.extend({
-    /*
-     * TODO: Make this more elegant
-     * ex. - templates/templ.html
-     */
-    template: "app/modules/lunch/templates/lunch.html",
+  var MainView = Backbone.View.extend({
 
     tagName: 'div',
     id: 'lunch',
-    className: 'module module-small',
+    className: 'module',
 
     initialize: function() {
-      this.model = new Lunch.Model();
+      this.model = new Lunch();
       this.model.fetch();
 
       //Make sure to re-render on change
       this.model.on('change:day', this.render, this);
-
-      //Render entities on rendered event
-      this.on('rendered', this.bindRender, this);
+      this.model.on('change:entities', this.renderEntities, this);
     },
 
-    bindRender: function() {
-      //Bind to the change event to re-render items
-      this.model.on('change', this.renderEntities, this);
+    render: function() {
+      this.$el.html(Templates.lunch.base.render(this.model.toJSON()));
       this.renderEntities();
+
+      return this;
     },
 
     renderEntities: function() {
       var self = this,
-          template = Hogan.compile('<li>{{name}} - {{rating}}</li>'),
           things = this.model.get('entities');
           voters = this.model.get('votees');
 
@@ -79,27 +56,29 @@ function(namespace, Backbone, Hogan) {
             return -thing.rating;
           }).each(function(thing, idx) {
             $('.ranking', self.$el)
-              .append(template.render(thing))
-              .hide().fadeIn(100);
+              .append(Templates.lunch.location.render(thing));
           });
-      });
+      }).fadeIn(100);
       $('.votees', this.$el).fadeOut(200, function() {
         $(this).empty();
 
         //Render voters
-        _.each(voters, function(voter) {
+        if(!voters || !voters.length) {
+          $('.votees', self.$el).append($('<li>No voters yet!</li>'));
+        }
+        else {
+          _.each(voters, function(voter) {
           $('.votees', self.$el)
             .append($('<li>' + voter + '</li>')).fadeIn(100);
-        });
-      });
+          });
+        }
+      }).fadeIn(100);
 
       return this;
     }
-
   });
 
-  //Register the view and return
-  namespace.Register.registerView(Lunch.Views.Main);
-  return Lunch;
 
-});
+  return MainView;
+
+}).call(this);
