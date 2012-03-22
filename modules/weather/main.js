@@ -33,6 +33,7 @@
 
     render: function() {
       this.$el.html(Templates.weather.base.render());
+      this.renderBody();
 
       return this;
     },
@@ -41,8 +42,7 @@
       var self = this,
           model = this.model;
 
-      $('.condition', this.$el).html(imgTmpl);
-      $('.condition', this.$el).append(Templates.weather.conditions.render(model.toJSON()));
+      $('.condition', this.$el).html(Templates.weather.conditions.render(model.toJSON()));
 
       _.each(model.get('forecast'), function(day) {
         $('.forecast', self.$el).append(Templates.weather.forecast.render(day));
