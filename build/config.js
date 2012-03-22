@@ -8,9 +8,7 @@ config.init({
 
   clean: {
     release: 'release/**',
-    compiled: [
-      'app/Main.js'
-    ]
+    compiled: []
   },
 
   coffee: {
@@ -30,7 +28,7 @@ config.init({
   },
 
   concat: {
-    'release/app.js': [
+    'release/main.js': [
       'app/*.js'
     ]
   },
