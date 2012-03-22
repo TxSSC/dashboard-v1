@@ -1,11 +1,8 @@
-# TxSSC Dashboard!
+Dashboard
+=========
 
 
-## Each module must return an object, which has the Models, Collections, and Views attached.
-### **{ Model: MyModel, Collection: MyCollection, Views: [ MyView1, MyView2 ]}**
-
-
-
+### Directory layout ###
 ```
 .
 ├── app
@@ -43,7 +40,7 @@
 └── package.json
 ```
 
-
+## Each module must return a main view that is initialized on ready ##
 
 ## Additions ##
 - *[holman/play](https://github.com/holman/play)*
