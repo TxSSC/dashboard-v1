@@ -15,7 +15,7 @@
 
       setInterval(function() {
         self.fetch();
-      }, 10000);
+      }, 30000);
     }
 
   });
@@ -54,22 +54,22 @@
         _.chain(things)
           .sortBy(function(thing) {
             return -thing.rating;
-          }).each(function(thing, idx) {
+          }).each(function(thing) {
             $('.ranking', self.$el)
               .append(Templates.lunch.location.render(thing));
           });
       }).fadeIn(100);
-      $('.votees', this.$el).fadeOut(200, function() {
+      $('.votees', this.$el).fadeOut(100, function() {
         $(this).empty();
 
         //Render voters
-        if(!voters || !voters.length) {
-          $('.votees', self.$el).append($('<li>No voters yet!</li>'));
+        if((!self.model.isNew() && !voters.length) || (voters && !voters.length)) {
+          $('.votees', self.$el).append($('<li class="shadow">No voters yet!</li>'));
         }
         else {
           _.each(voters, function(voter) {
           $('.votees', self.$el)
-            .append($('<li>' + voter + '</li>')).fadeIn(100);
+            .append($('<li class="shadow">' + voter + '</li>'));
           });
         }
       }).fadeIn(100);
