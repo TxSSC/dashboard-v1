@@ -95,6 +95,7 @@
 
     render: function() {
       this.$el.html(Templates.ticket_system.base.render());
+      this.renderBody();
 
       return this;
     },
