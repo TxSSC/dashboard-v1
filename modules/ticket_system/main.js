@@ -59,7 +59,7 @@
 
       setInterval(function() {
         self.fetch();
-      }, 10000);
+      }, 30000);
     }
 
   });
