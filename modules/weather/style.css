@@ -1,15 +1,20 @@
 /* ---------- Weather panel styles ------------ */
 #weather {
   width: 480px;
+  min-height: 200px;
 }
+
+  #weather .condition ul {
+    margin-top: 10px;
+  }
 
   #weather .day {
     float: left;
     margin: 0 0;
-    margin-right: 6px;
+    margin-right: 4px;
     padding: 0 0;
-    padding-right: 6px;
-    width: 46%;
+    padding-right: 4px;
+    width: 47%;
   }
 
     #weather .day h1 {
@@ -22,6 +27,7 @@
 
   #weather .forecast {
     margin: 0 auto;
+    margin-top: 10px;
   }
 
   #weather ul {
@@ -30,6 +36,6 @@
   }
 
     #weather ul li {
-      padding: 2px 2px;
+      padding: 1px 0;
       text-shadow: 0 0 1px #444;
     }

@@ -10,10 +10,10 @@
 
       this.fetch();
 
-      //Fetch the weather every 15 minutes
+      //Fetch the weather every 10 minutes
       setInterval(function() {
         self.fetch();
-      }, 9000000);
+      }, 600000);
     }
 
   });
