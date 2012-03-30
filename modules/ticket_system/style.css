@@ -1,7 +1,7 @@
 /* --------- Ticket System styles -------------- */
 #tickets {
   width: 460px;
-  min-height: 200px;
+  min-height: 280px;
 }
 
   #tickets .stats {
@@ -9,7 +9,7 @@
   }
 
     #tickets .stats th {
-      color: #000;
+      color: #DDD;
     }
 
     #tickets .stats td {

@@ -89,7 +89,7 @@
         this._collectionStatus = true;
       }
       else {
-        this.renderBody();
+        this.render();
       }
     },
 
