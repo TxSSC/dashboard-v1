@@ -27,7 +27,7 @@
       if(typeof(modules[module]) === 'function') {
         var newView = new modules[module]();
         Dashboard.Views.push(newView);
-        $container.append(newView.render().$el);
+        $container.append(newView.$el);
       }
     });
 
