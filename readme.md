@@ -1,5 +1,5 @@
 Dashboard
-=========
+==============
 
 
 ### Directory layout ###
@@ -40,14 +40,17 @@ Dashboard
 └── package.json
 ```
 
-## Each module must return a main view that is initialized on ready ##
+## Modules
+- Each module must return a main view that can be appended to the main body
+- Modules are responsible for rendering content inside their element
 
-## Additions ##
+
+## Additions
 - *[holman/play](https://github.com/holman/play)*
 - Hipchat panel
 
 
-## Example nginx api proxy config ##
+## Example nginx api proxy config
 ```
 server {
   listen    8080;
@@ -79,5 +82,5 @@ server {
 ```
 
 
-## Configuration ##
+## Configuration
 - Set use nginx to set X-Auth-Token headers on all proxied apis
