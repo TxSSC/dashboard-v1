@@ -8,7 +8,11 @@
     initialize: function() {
       var self = this;
 
-      this.fetch();
+      this.fetch({
+        success: function() {
+          self.trigger('fetch');
+        }
+      });
 
       //Fetch the weather every 10 minutes
       setInterval(function() {
@@ -28,6 +32,7 @@
     initialize: function() {
       this.model = new Weather();
 
+      this.model.on('fetch', this.render, this);
       this.model.on('change', this.renderUpdate, this);
     },
 
