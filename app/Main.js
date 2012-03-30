@@ -3,7 +3,7 @@
     '/assets/js/jquery.js',
     '/assets/js/jquery.masonry.js',
     '/assets/js/underscore.js',
-    '/assets/js/hogan.js',
+    '/assets/js/hogan.js'
   ];
 
   lab
@@ -13,7 +13,7 @@
   .script('/release/modules/module-main.js').wait()
   .wait(function() {
 
-    window.Dashboard = {
+    var Dashboard = {
       Views: []
     };
 
