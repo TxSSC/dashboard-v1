@@ -1,8 +1,4 @@
-Dashboard
-==============
-
-
-### Directory layout ###
+### Client directory layout
 ```
 .
 ├── app
