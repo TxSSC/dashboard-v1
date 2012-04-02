@@ -1,6 +1,6 @@
 /* -------- Global styles -------- */
 body {
-  background: #555 url('/assets/img/carbon_fibre.png');
+  background: #0F0F0F;
 }
 
 .container-fluid {
@@ -24,6 +24,7 @@ body {
   .module h1 {
     color: #EEE;
     font-size: 24px;
+    text-align: center;
     margin-bottom: 10px;
     padding-bottom: 4px;
     border-bottom: solid 1px #444;
