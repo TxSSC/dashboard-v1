@@ -32,7 +32,7 @@
 
     tagName: 'div',
     id: 'lunch',
-    className: 'module',
+    className: 'module small',
 
     initialize: function() {
       this.model = new Lunch();
@@ -120,8 +120,8 @@
           backgroundColor: '#EFEFEF',
           align: 'left',
           verticalAlign: 'top',
-          x: 100,
-          y: 30,
+          x: 54,
+          y: 24,
           floating: true,
           shadow: true
         },
