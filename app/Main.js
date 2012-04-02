@@ -3,7 +3,8 @@
     '/assets/js/jquery.js',
     '/assets/js/jquery.masonry.js',
     '/assets/js/underscore.js',
-    '/assets/js/hogan.js'
+    '/assets/js/hogan.js',
+    '/assets/js/highcharts.js'
   ];
 
   lab
