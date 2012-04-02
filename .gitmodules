@@ -1,0 +1,3 @@
+[submodule "client/build/tasks"]
+	path = client/build/tasks
+	url = git@github.com:vanetix/build-tasks
