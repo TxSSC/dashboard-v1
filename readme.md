@@ -21,3 +21,6 @@ Dashboard
 ├── package.json
 └── readme.md
 ```
+
+## Build client
+- `cd client/ && node build && cd ../`
