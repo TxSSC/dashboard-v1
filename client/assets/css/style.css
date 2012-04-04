@@ -1,25 +1,17 @@
 /* -------- Global styles -------- */
 body {
   background: #0F0F0F;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .container-fluid {
-  padding: 0 10px;
+  padding-left: 0;
+  padding-right: 0;
 }
-
 
 /* -------- Module containers -------- */
 
-.module {
-  margin: 10px 4px;
-  padding: 14px 14px 18px 14px;
-  background: #232526 url('/assets/img/paper_1.png');
-  border: 1px solid #333;
-  -webkit-box-shadow: 1px 1px 1px 2px #222222;
-  box-shadow: 1px 1px 1px 2px #222222;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #BBB;
-}
+.module { color: #fff; }
 
   .module h1 {
     color: #EEE;
@@ -35,15 +27,12 @@ body {
     font-weight: bold;
   }
 
-  .module:after, .module:before {
-    content: "";
-    clear: all;
-  }
-
-  .module.small {
-    width: 240px;
-  }
-
-  .module.large {
-
+  /* Clearfix - Automatically clear after a module */
+  .module:after, .clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
   }
