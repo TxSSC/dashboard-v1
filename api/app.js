@@ -20,7 +20,12 @@ app.subscriber = new EventSub({
   hostname: '127.0.0.1'
 });
 
-//define our namespace 'routes' we want to subscribe to
+/*
+ * define our namespace 'routes' we want to subscribe to
+ *
+ * `sockets.SocketController` returns a function for the
+ * subscriber to invoke
+ */
 app.subscriber.add('tickets', sockets.Tickets(socket));
 app.subscriber.add('lunch', sockets.Lunch(socket));
 

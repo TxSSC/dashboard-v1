@@ -14,6 +14,10 @@ module.exports = function(io) {
 
   });
 
+  /*
+   * This is just an 'event echo handler'
+   * being that it just echos events as they come in
+   */
   function handler(event, data) {
     lunch.emit(event, data);
   }
@@ -31,6 +35,17 @@ function fetchDay(callback) {
   };
 
   http.get(options, function(res) {
-    return callback(JSON.parse(res));
+    if(res.statusCode === 200) {
+      var json = '';
+
+      res.setEncoding('utf8');
+      res.on('data', function(chunk) {
+        json += chunk;
+      });
+
+      res.on('end', function() {
+        return callback(JSON.parse(json));
+      });
+    }
   });
 }
