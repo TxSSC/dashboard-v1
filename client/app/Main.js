@@ -4,6 +4,7 @@
     '/assets/js/jquery.masonry.js',
     '/assets/js/underscore.js',
     '/assets/js/hogan.js',
+    '/assets/js/raphael-min.js',
     '/assets/js/highcharts.js'
   ];
 
