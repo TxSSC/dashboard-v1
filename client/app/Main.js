@@ -10,6 +10,7 @@
   lab
   .script(deps)
   .script('/assets/js/backbone.js').wait()
+  .script('/release/config.js').wait()
   .script('/release/modules/module-templates.js').wait()
   .script('/release/modules/module-main.js').wait()
   .wait(function() {

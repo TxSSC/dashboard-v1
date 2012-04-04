@@ -1,0 +1,4 @@
+{
+  "weather_api_key": "<wunderground.com API key>",
+  "weather_zip_code": "<zip code>"
+}
