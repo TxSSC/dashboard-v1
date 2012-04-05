@@ -33,9 +33,6 @@
     },
 
     render: function() {
-      console.log('render');
-      console.log(this.model);
-
       this.$el.html(Templates.lunch.base.render(this.model.toJSON()));
       this.renderPlot();
 
@@ -54,8 +51,6 @@
     },
 
     renderPlot: function() {
-      console.log('renderplot');
-      console.log(this.model);
       var self = this;
 
       this.plot = new Highcharts.Chart({
