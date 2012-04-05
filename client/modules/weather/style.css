@@ -1,45 +1,49 @@
-/* ---------- Weather panel styles ------------ */
-#weather {
-  width: 480px;
-  min-height: 200px;
+/* ---------- Header panel styles ------------ */
+#header {
+  background: #262626;
+  padding: 14px 0;
+  margin: 0.25%;
 }
 
-  #weather .condition ul {
-    margin: 0 auto;
-  }
-
-  #weather .condition img {
-    width: 100%;
-  }
-
-  #weather .day {
+  #header #date {
     float: left;
-    margin: 0 0;
-    margin-right: 4px;
-    padding: 0 0;
-    padding-right: 4px;
-    width: 47%;
+    font-size: 24px;
+    line-height: 1.3em;
+    padding: 0 26px;
   }
 
-    #weather .day h1 {
-      font-size: 16px;
-      padding: 0 0;
-      line-height: 24px;
-      border-color: #444;
-      color: #DDD;
+    #header #date span { display: block; }
+
+  #header #time {
+    width: 20%;
+    margin: 20px auto 0 auto;
+    text-align: center;
+    font-size: 65px;
+    font-weight: bold;
+
+  }
+
+    #header #time span {
+      font-size: 25px;
     }
 
-  #weather .forecast {
-    margin: 0 auto;
-    margin-top: 10px;
+
+/* ---------- Weather panel styles ------------ */
+#weather {
+  float: right;
+  padding: 0 14px 0 0;
+}
+
+  #weather icon, #weather span { float: left; display: block; }
+
+  #weather icon {
+    width: 65px;
+    height: 65px;
+    margin-right: 25px;
   }
 
-  #weather ul {
-    list-style: none;
-    margin: 0 0;
+  #weather span {
+    font-size: 38px;
+    font-weight: bold;
+    margin: 20px 14px 0 0;
   }
-
-    #weather ul li {
-      padding: 1px 0;
-      text-shadow: 0 0 1px #444;
-    }
