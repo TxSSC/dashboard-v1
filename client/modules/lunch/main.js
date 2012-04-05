@@ -28,16 +28,16 @@
     initialize: function() {
       this.model = new Lunch();
 
-      this.model.on('change', this.render, this);
+      this.model.on('change:day', this.render, this);
+      this.model.on('change:entities', this.renderPlot, this);
     },
 
     render: function() {
-      this.$el.html(Templates.lunch.base.render(this.model.toJSON()));
-      if(!this.plot) this.renderPlot();
+      console.log('render');
+      console.log(this.model);
 
-      //Make sure to re-render on change
-      this.model.on('change:day', this.render, this);
-      this.model.on('change:entities', this.renderPlot, this);
+      this.$el.html(Templates.lunch.base.render(this.model.toJSON()));
+      this.renderPlot();
 
       return this;
     },
@@ -54,6 +54,8 @@
     },
 
     renderPlot: function() {
+      console.log('renderplot');
+      console.log(this.model);
       var self = this;
 
       this.plot = new Highcharts.Chart({
