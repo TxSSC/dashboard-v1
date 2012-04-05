@@ -39,7 +39,7 @@
 
   var MainView = Backbone.View.extend({
     id: 'header',
-    className: 'module',
+    className: 'module full',
 
     // Render Date and Time
     initialize: function() {

@@ -5,13 +5,16 @@ body {
 }
 
 .container-fluid {
-  padding-left: 0;
-  padding-right: 0;
+  padding: 0.25%;
 }
 
 /* -------- Module containers -------- */
 
-.module { color: #fff; }
+.module {
+  float: left;
+  margin: 0.25%;
+  color: #fff;
+}
 
   .module h1 {
     color: #EEE;
@@ -36,3 +39,24 @@ body {
     clear: both;
     height: 0;
   }
+
+/* -------- Module sizes -------- */
+
+.full {
+  width: 99.5%;
+}
+
+.tall {
+  width: 24.5%;
+  height: 518px;
+}
+
+.half {
+  width: 49.5%;
+  height: 518px;
+}
+
+.small {
+  width: 24.6%;
+  height: 256px;
+}
