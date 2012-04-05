@@ -19,6 +19,10 @@ config.init({
     'release/templates.js': 'app/templates/*.html'
   },
 
+  config: {
+    'release/config.js': '../config.json'
+  },
+
   mincss: {
     'release/style.css': [
       'assets/css/bootstrap.css',
@@ -35,7 +39,7 @@ config.init({
 
   watch: {
       files: [ 'modules/**', 'app/*', 'assets/**' ],
-      tasks: 'modules coffee hogan mincss concat clean:compiled'
+      tasks: 'modules coffee config mincss concat clean:compiled'
   },
 
   server: {
@@ -49,6 +53,6 @@ config.init({
 
 task.registerTask(
   'default',
-  'clean:release modules coffee hogan mincss concat clean:compiled'
+  'clean:release modules coffee config mincss concat clean:compiled'
 );
 task.registerTask('dev', 'server:dev watch');
