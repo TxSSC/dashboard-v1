@@ -4,11 +4,20 @@ module.exports = function(io) {
   .on('connection', function(socket) {});
 
   /*
-   * This is just an 'event echo handler'
-   * being that it just echos events as they come in
+   * Process the event and pass the `data` we want to
+   * the client.
+   *
+   * @param {event} - The event that fired
+   * @param {data} - Object or string
+   *
+   * If `data` is an object, data.body is used
+   * If `data` is a string, the string itself is used
    */
   function handler(event, data) {
-    console.log(event);
+    if(typeof(data) === 'object' && data.body) {
+      data = data.body;
+    }
+
     tickets.emit(event, data);
   }
 

@@ -15,21 +15,26 @@ module.exports = function(io) {
   });
 
   /*
-   * This is just an 'event echo handler'
-   * being that it just echos events as they come in
+   * Process the event and pass the `data` we want to
+   * the client.
+   *
+   * @param {event} - The event that fired
+   * @param {data} - Object
    */
   function handler(event, data) {
     lunch.emit(event, data);
   }
 
-  //Return handler as the main handler
+  /*
+   * Return handler as the main handler
+   */
   return handler;
 };
 
 
 function fetchDay(callback) {
   var options = {
-    host: process.env.LUNCH_SERVER,
+    host: process.env.LUNCH_HOST,
     port: process.env.LUNCH_PORT,
     path: '/lunch'
   };
