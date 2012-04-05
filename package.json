@@ -10,14 +10,12 @@
     "rimraf": "2.0.1",
     "coffee-script": ">=1.2.0",
     "clean-css": "0.3.2",
-    "union": "0.1.7",
-    "flatiron": "0.1.16"
-  },
-  "devDependencies": {
-    "vows": "0.6.1"
+    "node-static": ">=0.5.9",
+    "socket.io": ">=0.9.5",
+    "http-proxy": ">=0.8.0",
+    "node-redis-events": "git://github.com/vanetix/node-redis-events.git"
   },
   "scripts": {
-    "test": "vows --spec",
     "start": "node api/app.js"
   }
 }

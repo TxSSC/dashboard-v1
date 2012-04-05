@@ -4,27 +4,18 @@
    * Polls the server every 10 seconds
    */
   var Lunch = Backbone.Model.extend({
-    url: '/lunch-proxy/lunch',
-
     initialize: function() {
-      var self = this;
+      var self = this,
+          socket = io.connect('http://localhost/lunch');
 
-      this.poll();
-      this.fetch({
-        success: function() {
-          self.trigger('fetch');
-        }
+      //This looks like a bad idea
+      socket.on('day:new', function(data) {
+        self.set(data);
       });
-    },
-
-    poll: function() {
-      var self = this;
-
-      setInterval(function() {
-        self.fetch();
-      }, 30000);
+      socket.on('day:update', function(data) {
+        self.set(data);
+      });
     }
-
   });
 
 
@@ -37,16 +28,13 @@
     initialize: function() {
       this.model = new Lunch();
 
-      this.model.on('fetch', this.render, this);
+      this.model.on('change:day', this.render, this);
+      this.model.on('change:entities', this.renderPlot, this);
     },
 
     render: function() {
       this.$el.html(Templates.lunch.base.render(this.model.toJSON()));
-      if(!this.plot) this.renderPlot();
-
-      //Make sure to re-render on change
-      this.model.on('change:day', this.render, this);
-      this.model.on('change:entities', this.renderPlot, this);
+      this.renderPlot();
 
       return this;
     },
