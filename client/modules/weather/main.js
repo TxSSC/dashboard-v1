@@ -11,7 +11,7 @@
     initialize: function() {
       var self = this;
 
-      this.fetch({
+      /*this.fetch({
         silent: true, // don't fire a change event
         success: function(model, response) {
           self.trigger('fetch');
@@ -21,7 +21,7 @@
       //Fetch the weather every 10 minutes
       setInterval(function() {
         self.fetch();
-      }, 600000);
+      }, 600000);*/
     },
 
     sync: function(method, model, options) {
@@ -50,7 +50,7 @@
 
       var data = {
         weekday: dayArray[date.getDay()], // returns 0-6 so grab array value
-        date: monthArray[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getYear()
+        date: monthArray[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear()
       };
 
       this.el.innerHTML = Templates.weather.date.render(data);
