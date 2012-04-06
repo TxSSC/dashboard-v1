@@ -50,7 +50,7 @@
 
       var data = {
         weekday: dayArray[date.getDay()], // returns 0-6 so grab array value
-        date: monthArray[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getYear()
+        date: monthArray[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear()
       };
 
       this.el.innerHTML = Templates.weather.date.render(data);
