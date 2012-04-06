@@ -16,20 +16,24 @@
   .script('/release/modules/module-main.js').wait()
   .wait(function() {
 
-    var Dashboard = {
-      Views: []
-    };
+    $(document).ready(function() {
 
-    var $container = $('#main');
+      var Dashboard = {
+        Views: []
+      };
 
-    var layoutOrder = ['weather'];
+      var $container = $('#main');
 
-    layoutOrder.forEach(function(module) {
-      if(typeof(modules[module]) === 'function') {
-        var newView = new modules[module]();
-        Dashboard.Views.push(newView);
-        $container.append(newView.$el);
-      }
+      var layoutOrder = ['weather', 'calendar'];
+
+      layoutOrder.forEach(function(module) {
+        if(typeof(modules[module]) === 'function') {
+          var newView = new modules[module]();
+          Dashboard.Views.push(newView);
+          $container.append(newView.$el);
+        }
+      });
+
     });
 
   });

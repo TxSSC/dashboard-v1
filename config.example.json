@@ -1,4 +1,6 @@
 {
   "weather_api_key": "<wunderground.com API key>",
-  "weather_zip_code": "<zip code>"
+  "weather_zip_code": "<zip code>",
+  "google_api_key": "<Google API key>",
+  "google_calendar_id": "<Google public calendar ID"
 }
