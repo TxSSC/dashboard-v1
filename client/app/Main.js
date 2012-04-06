@@ -7,7 +7,7 @@
     '/assets/js/highcharts.js'
   ];
 
-  $LAB
+  lab
   .script(deps)
   .script('/assets/js/backbone.js').wait()
   .script('/release/config.js').wait()
