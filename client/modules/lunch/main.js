@@ -33,7 +33,6 @@
     },
 
     render: function() {
-      this.$el.html(Templates.lunch.base.render(this.model.toJSON()));
       this.renderPlot();
 
       return this;
@@ -51,23 +50,24 @@
     },
 
     renderPlot: function() {
-      var self = this;
+      var plot,
+          self = this;
 
-      this.plot = new Highcharts.Chart({
+      plot = new Highcharts.Chart({
         credits: {
           enabled: false
         },
         chart: {
           type: 'column',
-          renderTo: $('.chart', self.$el).get(0),
+          renderTo: self.$el.get(0),
           plotShadow: false,
           backgroundColor: 'transparent',
-          width: 220,
-          height: 160,
+          alignTicks: false,
           spacingTop: 0,
           spacingRight: 0,
           spacingBottom: 0,
-          spacingLeft: 0
+          spacingLeft: 0,
+          marginRight: 40
         },
         title: {
           text: self.model.get('day'),
@@ -86,7 +86,7 @@
             text: 'Location',
             style: {
               'color': '#AAA',
-              'font-size': '14px',
+              'font-size': '16px',
               'font-weight': 'normal'
             }
           }
@@ -94,11 +94,12 @@
         yAxis: {
           min: 0,
           max: 8,
+          allowDecimals: false,
           title: {
             text: 'Rating',
             style: {
               'color': '#AAA',
-              'font-size': '14px',
+              'font-size': '16px',
               'font-weight': 'normal'
             }
           }
@@ -109,9 +110,13 @@
           align: 'left',
           verticalAlign: 'top',
           x: 54,
-          y: 24,
+          y: 28,
           floating: true,
-          shadow: true
+          shadow: true,
+          itemStyle: {
+            'color': '#444',
+            'font-size': '18px'
+          }
         },
         tooltip: {
           formatter: function() {
@@ -127,8 +132,10 @@
         series: self.packageData()
       });
 
+
       return this;
     }
+
   });
 
 
