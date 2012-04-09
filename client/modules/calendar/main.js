@@ -21,11 +21,24 @@
     initialize: function() {
       var self = this;
 
+      this.comparator = function(model) {
+        return model.get("start").date;
+      };
+
       this.fetch({
-        success: function(model, response) {
+        success: function(collection, response) {
           self.trigger('fetch');
         }
       });
+
+      // Fetch calendar events every 10 minutes
+      setInterval(function() {
+        self.fetch({
+          success: function(collection, response) {
+            self.trigger('update');
+          }
+        });
+      }, 600000);
 
     },
 
@@ -50,21 +63,42 @@
     initialize: function() {
       this.collection = new CalendarCollection();
       this.collection.on('fetch', this.render, this);
+      this.collection.on('update', this.update, this);
     },
 
     render: function() {
       var self = this;
 
       this.collection.models.forEach(function(event) {
-        var ev = self.renderEvent(event);
-        self.$el.append(ev);
+        var view = new EventView({id: event.id, model: event});
+        self.$el.append(view.el);
       });
 
       return this.$el;
     },
 
-    renderEvent: function(event) {
-      var attributes = event.toJSON(),
+    update: function() {
+      $('.event', this.el).each(function(i) {
+        $(this).remove();
+      });
+
+      this.render();
+    }
+
+  });
+
+
+  var EventView = Backbone.View.extend({
+
+    className: "event clearfix",
+
+    initialize: function() {
+      this.render(this.model);
+      return this.el;
+    },
+
+    render: function(model) {
+      var attributes = model.toJSON(),
           monthArray = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
           date = attributes.start.date.split('-');
 
@@ -74,9 +108,8 @@
         day: date[2]
       };
 
-      return Templates.calendar.event.render(data);
+      this.el.innerHTML = Templates.calendar.event.render(data);
     }
-
   });
 
 
