@@ -4,47 +4,6 @@
    */
   var socket = io.connect('http://localhost/tickets');
 
-  // /*
-  //  * Base ticket activity model
-  //  */
-  // var TicketActivityItem = Backbone.Model.extend({});
-  // /*
-  //  * Ticket activity collection, caches to localstorage
-  //  * as events come in
-  //  * Sorted by `ticket.timestamp`
-  //  */
-  // var TicketActivity = Backbone.Collection.extend({
-  //   model: TicketActivityItem,
-  //   localStorage: new Backbone.LocalStorage('ticket-activity'),
-
-  //   initialize: function() {
-  //     var self = this;
-
-  //     //Bind to ticket
-  //     socket.on('ticket:new', function(data) {
-  //       self.newTicket(data);
-  //     });
-  //     //Bind to ticket update
-  //     socket.on('ticket:update', function(data) {
-  //       self.updateTicket(data);
-  //     });
-  //     socket.on('ticket:remove', function(data){
-  //       self.removeTicket(data);
-  //     });
-
-  //   },
-
-  //   comparator: function(model) {
-  //     return model.timestamp;
-  //   },
-
-  //   newTicket: function(data) {
-  //     var self = this;
-
-
-  //   }
-  // });
-
 
   /*
    * Base User model
@@ -312,9 +271,9 @@
   });
 
 
-  var TicketListView = Backbone.View.extend({
+  var MainView = Backbone.View.extend({
     id: 'tickets',
-    className: 'module small',
+    className: 'module tall',
 
     initialize: function() {
       var self = this;
@@ -356,41 +315,9 @@
   });
 
 
-  var MainView = Backbone.View.extend({
-    id: 'tickets',
-    className: 'module',
-    events: {
-      "click .swap-view": "swapView"
-    },
-
-    initialize: function() {
-      this.currentView = new TicketView();
-      this.secondaryView = new TicketActivity();
-
-
-      this.render();
-    },
-
-    swapView: function(e) {
-      var ref,
-          self = this;
-
-      e.preventDefault();
-
-      this.$el.fadeOut(200, function() {
-        self.$el.html(self.secondaryView.$el);
-        ref = self.secondaryView;
-        self.secondaryView = self.currentView;
-        self.currentView = ref;
-
-        self.fadeIn(200);
-      });
-    }
-
-  });
-
-
-  //return MainView;
-  return TicketListView;
+  /*
+   * Return our main view
+   */
+  return MainView;
 
 }).call(this);
