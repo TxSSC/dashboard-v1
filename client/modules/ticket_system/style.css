@@ -1,21 +1,24 @@
 /* --------- Ticket System styles -------------- */
-#tickets {
-  width: 460px;
-  min-height: 280px;
-}
+#tickets {}
 
-  #tickets .stats {
-    margin-bottom: 0;
+  #tickets h1 {
+    border-bottom-color: #888;
   }
 
-    #tickets .stats th {
-      color: #DDD;
+  #tickets .ticket-count-list {
+    list-style: none;
+    margin: 0 auto;
+    font-size: 24px;
+  }
+
+    #tickets .ticket-count-list li {
+      display: block;
+      border-bottom: 1px solid #444;
+      padding: 0 20px;
+      padding-bottom: 10px;
     }
 
-    #tickets .stats td {
-      border-color: #C0C0C0;
-    }
-
-    #tickets .stats tr:hover td {
-      background-color: transparent;
-    }
+  #tickets img {
+    width: 54px;
+    height: 54px;
+  }
