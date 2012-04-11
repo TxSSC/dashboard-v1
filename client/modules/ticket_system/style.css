@@ -7,6 +7,16 @@
     border-bottom-color: #888;
   }
 
+  #tickets img {
+    width: 54px;
+    height: 54px;
+  }
+
+  #tickets .changed-attr {
+    color: red;
+    transition: color 5s linear 1s;
+  }
+
   #tickets .ticket-count-list {
     list-style: none;
     margin: 0 10px;
@@ -17,16 +27,18 @@
     padding: 2px 20px;
   }
 
-  #tickets .ticket-count-list li:first-child span {
+  #tickets .ticket-count-list
+  li:first-child span {
     font-size: 16px;
     padding: 0 18px;
     color: #666;
   }
 
-  #tickets .ticket-count-list li:first-child span:first-child {
-    margin-left: 124px;
-    padding-right: 14px;
-  }
+    #tickets .ticket-count-list
+    li:first-child span:first-child {
+      margin-left: 124px;
+      padding-right: 14px;
+    }
 
     #tickets .ticket-count-list li {
       display: block;
@@ -39,7 +51,3 @@
       padding: 0 40px;
     }
 
-  #tickets img {
-    width: 54px;
-    height: 54px;
-  }
