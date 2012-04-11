@@ -7,12 +7,7 @@ config.init({
   },
 
   clean: {
-    release: 'release/**',
-    compiled: []
-  },
-
-  coffee: {
-    folder: 'app/*.coffee'
+    release: 'release/**'
   },
 
   hogan: {
@@ -39,13 +34,7 @@ config.init({
 
   watch: {
       files: [ 'modules/**', 'app/*', 'assets/**' ],
-      tasks: 'modules coffee config mincss concat clean:compiled'
-  },
-
-  server: {
-    dev: {
-      'app': 'release/'
-    }
+      tasks: 'clean modules config mincss concat'
   }
 
 });
@@ -53,6 +42,7 @@ config.init({
 
 task.registerTask(
   'default',
-  'clean:release modules coffee config mincss concat clean:compiled'
+  'clean modules config mincss concat'
 );
-task.registerTask('dev', 'server:dev watch');
+task.registerTask('release', 'default');
+task.registerTask('develop', 'watch');

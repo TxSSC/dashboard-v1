@@ -14,7 +14,7 @@ module.exports = function(io) {
    * If `data` is a string, the string itself is used
    */
   function handler(event, data) {
-    if(typeof(data) === 'object' && data.body) {
+    if(typeof(data) === 'object' && ~event.indexOf('ticket') && data.body) {
       data = data.body;
     }
 
