@@ -1,66 +1,63 @@
 /* --------- Ticket System styles -------------- */
-#tickets {
-  background-color: #262626;
+#tickets h1 {
+  margin: 0 10%;
+  text-align: center;
+  margin-bottom: 3.14%;
+  border-bottom: 1px solid #888;
 }
 
-  #tickets h1 {
-    margin: 0 40px;
-    text-align: center;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #888;
+#tickets img {
+  width: 54px;
+  height: 54px;
+}
+
+#tickets .changed {
+  -webkit-animation: changed-fade 60s ease-in 0 1;
+  -moz-animation: changed-fade 60s ease-in 0 1;
+  -animation: changed-fade 60s ease-in 0 1;
+}
+
+#tickets .ticket-count-list {
+  list-style: none;
+  margin: 0 auto;
+  font-size: 26px;
+}
+
+#tickets .ticket-count-list li {
+  display: block;
+  border-bottom: 1px solid #444;
+  margin: 0 3%;
+  padding: 1% 4%;
+  padding-bottom: 2%;
+  white-space: nowrap;
+}
+
+#tickets .ticket-count-list span {
+  vertical-align: middle;
+  margin: 0 auto;
+  margin-left: 24%;
+}
+
+  #tickets .ticket-count-list li:first-child {
+    padding: 0;
   }
 
-  #tickets img {
-    width: 54px;
-    height: 54px;
+  #tickets .ticket-count-list
+  li:first-child span {
+    font-size: 16px;
+    color: #666;
+    margin-left: 4%;
   }
 
-  #tickets .changed {
-    -webkit-animation: changed-fade 6s ease-in 0 1;
-    -moz-animation: changed-fade 6s ease-in 0 1;
-    -animation: changed-fade 6s ease-in 0 1;
+  #tickets .ticket-count-list
+  li span:first-child {
+    margin-left: 0;
   }
-
-  #tickets .ticket-count-list {
-    list-style: none;
-    margin: 0 10px;
-    font-size: 26px;
-  }
-
-  #tickets .ticket-count-list li {
-    display: block;
-    border-bottom: 1px solid #444;
-    padding: 8px 20px;
-    padding-bottom: 10px;
-  }
-
-  #tickets .ticket-count-list span {
-    padding: 0 40px;
-    display: inline-block;
-  }
-
-    #tickets .ticket-count-list li:first-child {
-      padding: 2px 20px;
-    }
 
     #tickets .ticket-count-list
-    li:first-child span {
-      font-size: 16px;
-      padding: 0 16px;
-      color: #666;
+    li:first-child span:first-child {
+      margin-left: 34%;
     }
-
-    #tickets .ticket-count-list
-    li span:first-child {
-      padding-left: 0;
-      padding-right: 60px;
-    }
-
-      #tickets .ticket-count-list
-      li:first-child span:first-child {
-        margin-left: 124px;
-        padding-right: 14px;
-      }
 
 /*
  * Ticket changed animation
