@@ -4,7 +4,10 @@
 }
 
   #tickets h1 {
-    border-bottom-color: #888;
+    margin: 0 40px;
+    text-align: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #888;
   }
 
   #tickets img {
@@ -12,9 +15,10 @@
     height: 54px;
   }
 
-  #tickets .changed-attr {
-    color: red;
-    transition: color 5s linear 1s;
+  #tickets .changed {
+    -webkit-animation: changed-fade 6s ease-in 0 1;
+    -moz-animation: changed-fade 6s ease-in 0 1;
+    -animation: changed-fade 6s ease-in 0 1;
   }
 
   #tickets .ticket-count-list {
@@ -23,31 +27,70 @@
     font-size: 26px;
   }
 
-  #tickets .ticket-count-list li:first-child {
-    padding: 2px 20px;
+  #tickets .ticket-count-list li {
+    display: block;
+    border-bottom: 1px solid #444;
+    padding: 8px 20px;
+    padding-bottom: 10px;
   }
 
-  #tickets .ticket-count-list
-  li:first-child span {
-    font-size: 16px;
-    padding: 0 18px;
-    color: #666;
+  #tickets .ticket-count-list span {
+    padding: 0 40px;
+    display: inline-block;
   }
+
+    #tickets .ticket-count-list li:first-child {
+      padding: 2px 20px;
+    }
 
     #tickets .ticket-count-list
-    li:first-child span:first-child {
-      margin-left: 124px;
-      padding-right: 14px;
+    li:first-child span {
+      font-size: 16px;
+      padding: 0 16px;
+      color: #666;
     }
 
-    #tickets .ticket-count-list li {
-      display: block;
-      border-bottom: 1px solid #444;
-      padding: 8px 20px;
-      padding-bottom: 10px;
+    #tickets .ticket-count-list
+    li span:first-child {
+      padding-left: 0;
+      padding-right: 60px;
     }
 
-    #tickets .ticket-count-list span {
-      padding: 0 40px;
-    }
+      #tickets .ticket-count-list
+      li:first-child span:first-child {
+        margin-left: 124px;
+        padding-right: 14px;
+      }
 
+/*
+ * Ticket changed animation
+ */
+@-webkit-keyframes changed-fade {
+  0% {
+    color: #F00;
+  }
+
+  100% {
+    color: #FFF;
+  }
+}
+
+@-moz-keyframes changed-fade {
+  0% {
+    color: #F00;
+  }
+
+  100% {
+    color: #FFF;
+  }
+}
+
+@keyframes changed-fade {
+  0% {
+    color: #F00;
+  }
+
+  100% {
+    color: #FFF;
+  }
+}

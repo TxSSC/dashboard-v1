@@ -21,12 +21,11 @@
       var self = this;
       this.fetch({
         success: function() {
-          self.trigger('fetch');
+          self.trigger('ready');
         }
       });
     }
   });
-
 
   /*
    * Base comment model
@@ -77,8 +76,8 @@
    *    'ticket:new': when the collection has a new ticket
    *    'ticket:update': when the collection has updated a ticket
    *    'ticket:remove': when the collection has removed a ticket
-   *    'comment:new': when the collection has added a new comment to a ticket
-   *    'comment:remove': when the collection has removed a comment from a ticket
+   *    'comment:new', userId: when the collection has added a new comment to a ticket
+   *    'comment:remove', userId: when the collection has removed a comment from a ticket
    * }
    */
   var Tickets = Backbone.Collection.extend({
@@ -202,26 +201,29 @@
      * Count the number of tickets a specified user has
      *
      * @param {userid} - backbone.model, the user to tally
-     * @return { tickets: int, comments: int }
+     * @return {Object} - { tickets: Number, comments: Number }
      */
     userCount: function(user) {
       var userImage,
           tickets = 0,
           comments = 0;
 
+      /*
+       * Filter by:
+       * - if the ticket is open
+       * - if the user created the ticket
+       * - if the user is assigned to the ticket
+       */
       this.each(function(ticket) {
-        if(ticket.get('user').id === user.id &&
-              ticket.get('status') === 'open') {
-          tickets += 1;
-        }
+        if(ticket.get('status') === 'open' && (ticket.get('user') === user.id ||
+              ~ticket.get('assigned_to').indexOf(user.id))) {
 
-        comments += ticket.comments.filter(function(comment) {
-          return comment.get('user').id === user.id;
-        }).length;
+          tickets += 1;
+          comments += ticket.commentCount();
+        }
       });
 
       return {
-        image: user.get('avatar'),
         tickets: tickets,
         comments: comments
       };
@@ -230,6 +232,8 @@
     /*
      * get the number of new tickets
      * these are tickets that have been read
+     *
+     * @return {Number}
      */
     newCount: function() {
       var newCount = this.filter(function(ticket) {
@@ -244,13 +248,14 @@
      *
      * @param {ticketId} - ticket to add the comment to
      * @param {comment} - comment object to add
+     * @event {comment:new} - triggers an event with userid of the new comment
      */
     addComment: function(ticketId, comment) {
       var ticket = this.get(ticketId);
 
       if(ticket) {
         ticket.comments.add(comment);
-        this.trigger('comment:new');
+        this.trigger('comment:new', comment.user.id);
       }
     },
 
@@ -259,19 +264,73 @@
      *
      * @param {ticketId} - ticket id of the comment
      * @param {commentId} - comment id to remove
+     * @event {comment:remove} - triggers an event with userid of the removed comment
      */
     removeComment: function(ticketId, commentId) {
-      var ticket = this.get(ticketId);
+      var comment,
+          ticket = this.get(ticketId);
 
       if(ticket) {
+        comment = ticket.comments.get(commentId);
         ticket.comments.remove(commentId);
-        this.trigger('comment:remove');
+        this.trigger('comment:remove', comment.get('user').id);
       }
     }
   });
 
 
-  var MainView = Backbone.View.extend({
+  /*
+   * Our user subview that contains the logic to render a user
+   *
+   * @model {User}
+   * @events {change:tickets}
+   */
+  var UserView = Backbone.View.extend({
+    tagName: 'li',
+
+    initialize: function() {
+      this.model.on('change', this.renderUpdate, this);
+    },
+
+    render: function() {
+      this.$el.html(Templates.ticket_system.user.render(this.model.toJSON()));
+
+      return this;
+    },
+
+    renderUpdate: function() {
+      var oldElement,
+          newElement;
+
+      /*
+       * Swap the element for a new one to retrigger the animation if
+       * the value has changed
+       */
+      if(this.model.hasChanged('tickets')) {
+        oldElement = $('.js-tickets', this.$el);
+        newElement = oldElement.clone(true);
+
+        newElement.text(this.model.get('tickets'))
+                  .addClass('changed');
+        oldElement.before(newElement);
+        oldElement.remove();
+      }
+      if(this.model.hasChanged('comments')) {
+        oldElement = $('.js-comments', this.$el);
+        newElement = oldElement.clone(true);
+
+        newElement.text(this.model.get('comments'))
+                  .addClass('changed');
+        oldElement.before(newElement);
+        oldElement.remove();
+      }
+    }
+  });
+
+  /*
+   * Kinda like a controller
+   */
+  var TicketsController = Backbone.View.extend({
     id: 'tickets',
     className: 'module tall',
 
@@ -279,16 +338,20 @@
       var self = this;
 
       this.users = new Users();
-
       this.tickets = new Tickets();
+      this.subViews = [];
+      this.readyFlag = false;
 
       //Assuming this will take longer than the user fetch
-      this.tickets.on('ready', function() {
-        self.render();
-      });
+      this.tickets.on('ready', this.readyStatus, this);
+      this.users.on('ready', this.readyStatus, this);
 
-      this.tickets.on('ticket:new ticket:update ticket:remove', this.render, this);
-      this.tickets.on('comment:new comment:remove', this.render, this);
+      /*
+       * Update the comments for a user, or the ticket counts for all users
+       */
+      this.tickets.on('ticket:new', this.calculateNew, this);
+      this.tickets.on('ticket:new ticket:update ticket:remove', this.calculateUsers, this);
+      this.tickets.on('comment:new comment:remove', this.calculateUsers, this);
     },
 
     render: function() {
@@ -303,14 +366,78 @@
     },
 
     renderUsers: function() {
-      var tickets = this.tickets,
+      var self = this,
+          users = this.users,
           element = $('.ticket-count-list', this.$el);
 
       this.users.each(function(user) {
-        element.append(Templates.ticket_system.user.render(tickets.userCount(user)));
+        var view = new UserView({
+          model: user
+        });
+
+        self.subViews.push(view);
+        element.append(view.render().el);
       });
 
       return this;
+    },
+
+    /*
+     * Check that both collections have been fetched, and
+     * prune the users we aren't interested in
+     */
+    readyStatus: function() {
+      if(this.readyFlag === true) {
+        var ticketUsers = Config.ticket_users;
+
+        this.users.each(function(user) {
+          if(ticketUsers && !~ticketUsers.indexOf(user.id)) {
+            self.users.remove(user.id);
+          }
+        });
+
+        this.calculateUsers();
+        this.render();
+      }
+
+      this.readyFlag = true;
+    },
+
+    /*
+     * Calculate a users tickets and comments
+     *
+     * @bind {ticket:new}
+     * @bind {ticket:update}
+     * @bind {ticket:remove}
+     * @bind {comment:new}
+     * @bind {comment:remove}
+     */
+    calculateUsers: function(userId) {
+      var users = this.users,
+          tickets = this.tickets,
+          user = userId ? users.get(userId) : null;
+
+      if(user) {
+        user.set(tickets.userCount(user));
+      }
+      else {
+        users.each(function(user) {
+          user.set(tickets.userCount(user));
+        });
+      }
+    },
+
+    /*
+     * Update the new ticket count on ticket:new
+     *
+     * @bind {ticket:new}
+     */
+    calculateNew: function() {
+      var newCount = this.tickets.newCount(),
+          element = $('.js-new', this.$el),
+          oldCount = parseInt(element.text(), 10);
+
+      if(newCount !== oldCount) element.text(newCount);
     }
   });
 
@@ -318,6 +445,6 @@
   /*
    * Return our main view
    */
-  return MainView;
+  return TicketsController;
 
 }).call(this);
