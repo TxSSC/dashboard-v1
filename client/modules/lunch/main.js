@@ -6,7 +6,7 @@
   var Lunch = Backbone.Model.extend({
     initialize: function() {
       var self = this,
-          socket = io.connect('http://localhost/lunch');
+          socket = io.connect('/lunch');
 
       //This looks like a bad idea
       socket.on('day:new', function(data) {

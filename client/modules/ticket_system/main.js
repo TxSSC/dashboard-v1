@@ -2,7 +2,7 @@
   /*
    * Our module socket connection
    */
-  var socket = io.connect('http://localhost/tickets');
+  var socket = io.connect('/tickets');
 
 
   /*
