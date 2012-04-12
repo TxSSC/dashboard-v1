@@ -63,16 +63,16 @@
           plotShadow: false,
           backgroundColor: 'transparent',
           alignTicks: false,
-          spacingTop: 0,
-          spacingRight: 0,
-          spacingBottom: 0,
-          spacingLeft: 0,
-          marginRight: 40
+          spacingTop: 8,
+          spacingRight: 40,
+          spacingBottom: 8,
+          spacingLeft: 8
         },
         title: {
           text: self.model.get('day'),
           style: {
-            color: '#EEE'
+            color: '#DDD',
+            'font-size': '22px'
           }
         },
         colors: [
@@ -95,6 +95,11 @@
           min: 0,
           max: 8,
           allowDecimals: false,
+          labels: {
+            style: {
+              'text-shadow': 'none'
+            }
+          },
           title: {
             text: 'Rating',
             style: {
@@ -115,7 +120,8 @@
           shadow: true,
           itemStyle: {
             'color': '#444',
-            'font-size': '18px'
+            'font-size': '18px',
+            'text-shadow': 'none'
           }
         },
         tooltip: {
