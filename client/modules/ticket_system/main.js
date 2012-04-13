@@ -388,7 +388,8 @@
      */
     readyStatus: function() {
       if(this.readyFlag === true) {
-        var ticketUsers = Config.ticket_users;
+        var self = this,
+            ticketUsers = Config.ticket_users;
 
         this.users.each(function(user) {
           if(ticketUsers && !~ticketUsers.indexOf(user.id)) {
