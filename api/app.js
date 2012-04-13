@@ -41,6 +41,24 @@ proxyServer = httpProxy.createServer(function(req, res, proxy) {
       port: process.env.TICKETS_PORT
     });
   }
+  /*
+   * Rewrite /stalker/
+   * and pass request to stalker API
+   */
+  else if(req.url.match(/\/stalker\//)) {
+    /*
+     * Rewrite the url from /stalker/route* to /route*
+     */
+    req.url = req.url.replace(/\/stalker\//, '/');
+
+    /*
+     * Add the auth header
+     */
+    proxy.proxyRequest(req, res, {
+      host: process.env.STALKER_HOST,
+      port: process.env.STALKER_PORT
+    });
+  }
   else {
     /*
      * Proxy the request to the localhost
@@ -92,6 +110,7 @@ app.subscriber = new EventSub({
  */
 app.subscriber.add('tickets', sockets.Tickets(socket));
 app.subscriber.add('lunch', sockets.Lunch(socket));
+app.subscriber.add('stalker', sockets.Stalker(socket));
 
 /*
  * Set up our static server

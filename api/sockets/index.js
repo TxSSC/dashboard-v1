@@ -1,4 +1,5 @@
 module.exports = {
   Tickets: require('./tickets.js'),
-  Lunch: require('./lunch')
+  Lunch: require('./lunch'),
+  Stalker: require('./stalker')
 };
