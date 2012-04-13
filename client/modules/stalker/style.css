@@ -1,0 +1,51 @@
+#stalker {}
+
+  #stalker h2 {
+    text-align: center;
+    padding: 0.3em 0;
+    text-shadow: none;
+  }
+
+  #stalker ul.header {
+    margin: 0;
+    border-bottom:1px solid #151617;
+    border-top:1px solid #151617;
+    padding: 0.3em 1em;
+  }
+
+    #stalker ul.header li {
+      list-style: none;
+      float: left;
+      text-shadow: none;
+    }
+
+      #stalker ul.header li:first-child {
+        width: 50px;
+        margin-right: 2em;
+      }
+
+      #stalker ul.header li:last-child { width: 71%; }
+
+  #stalker .stalker {
+    padding: 0.6em 1em;
+    border-bottom:1px solid #151617;
+    border-top:1px solid #303334;
+  }
+
+    #stalker .stalker:first-child { border-top: none; }
+    #stalker .stalker:last-child { border-bottom: none; }
+
+    #stalker span {
+      display: block;
+      float: left;
+    }
+
+      #stalker .avatar {
+        width: 50px;
+        margin-right: 2em;
+      }
+
+      #stalker .location {
+        font-size: 2em;
+        line-height: 38px;
+      }

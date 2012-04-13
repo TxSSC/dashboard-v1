@@ -9,6 +9,15 @@ var socket, app, staticContent, proxyServer, socketProxy,
 
 
 /*
+ * Set which port to run the proxy and internal
+ * service on. ex. 3000 and 3001
+ */
+var ports = {
+  proxy: process.env.DASHBOARD_PORT || 3000,
+  api: process.env.DASHBOARD_INTERNAL || 3001
+};
+
+/*
  * Internal http proxy for tickets and other apps,
  * our actual app runs on port 3001
  */
@@ -32,17 +41,35 @@ proxyServer = httpProxy.createServer(function(req, res, proxy) {
       port: process.env.TICKETS_PORT
     });
   }
+  /*
+   * Rewrite /stalker/
+   * and pass request to stalker API
+   */
+  else if(req.url.match(/\/stalker\//)) {
+    /*
+     * Rewrite the url from /stalker/route* to /route*
+     */
+    req.url = req.url.replace(/\/stalker\//, '/');
+
+    /*
+     * Add the auth header
+     */
+    proxy.proxyRequest(req, res, {
+      host: process.env.STALKER_HOST,
+      port: process.env.STALKER_PORT
+    });
+  }
   else {
     /*
      * Proxy the request to the localhost
      */
     proxy.proxyRequest(req, res, {
       host: 'localhost',
-      port: 3001
+      port: ports.api
     });
   }
 
-}).listen(process.env.PORT || 3000);
+}).listen(ports.proxy);
 
 /*
  * Proxy the websocket connection, on upgrade event
@@ -53,7 +80,7 @@ socketProxy = new httpProxy.RoutingProxy();
 proxyServer.on('upgrade', function(req, socket, head) {
   socketProxy.proxyWebSocketRequest(req, socket, head, {
     host: 'localhost',
-    port: 3001
+    port: ports.api
   });
 });
 
@@ -65,7 +92,7 @@ proxyServer.on('upgrade', function(req, socket, head) {
  */
 app = http.createServer(handler);
 socket = io.listen(app);
-app.listen(3001);
+app.listen(ports.api);
 
 
 /*
@@ -83,6 +110,7 @@ app.subscriber = new EventSub({
  */
 app.subscriber.add('tickets', sockets.Tickets(socket));
 app.subscriber.add('lunch', sockets.Lunch(socket));
+app.subscriber.add('stalker', sockets.Stalker(socket));
 
 /*
  * Set up our static server

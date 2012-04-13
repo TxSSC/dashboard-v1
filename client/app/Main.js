@@ -24,7 +24,7 @@
 
       var $container = $('#main');
 
-      var layoutOrder = ['weather', 'calendar'];
+      var layoutOrder = ['weather', 'calendar', 'stalker'];
 
       layoutOrder.forEach(function(module) {
         if(typeof(modules[module]) === 'function') {
