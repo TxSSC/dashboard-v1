@@ -9,6 +9,15 @@ var socket, app, staticContent, proxyServer, socketProxy,
 
 
 /*
+ * Set which port to run the proxy and internal
+ * service on. ex. 3000 and 3001
+ */
+var ports = {
+  proxy: process.env.DASHBOARD_PORT || 3000,
+  api: process.env.DASHBOARD_INTERNAL || 3001
+};
+
+/*
  * Internal http proxy for tickets and other apps,
  * our actual app runs on port 3001
  */
@@ -38,11 +47,11 @@ proxyServer = httpProxy.createServer(function(req, res, proxy) {
      */
     proxy.proxyRequest(req, res, {
       host: 'localhost',
-      port: 3001
+      port: ports.api
     });
   }
 
-}).listen(process.env.PORT || 3000);
+}).listen(ports.proxy);
 
 /*
  * Proxy the websocket connection, on upgrade event
@@ -53,7 +62,7 @@ socketProxy = new httpProxy.RoutingProxy();
 proxyServer.on('upgrade', function(req, socket, head) {
   socketProxy.proxyWebSocketRequest(req, socket, head, {
     host: 'localhost',
-    port: 3001
+    port: ports.api
   });
 });
 
@@ -65,7 +74,7 @@ proxyServer.on('upgrade', function(req, socket, head) {
  */
 app = http.createServer(handler);
 socket = io.listen(app);
-app.listen(3001);
+app.listen(ports.api);
 
 
 /*
