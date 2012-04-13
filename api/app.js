@@ -13,8 +13,8 @@ var socket, app, staticContent, proxyServer, socketProxy,
  * service on. ex. 3000 and 3001
  */
 var ports = {
-  proxy: process.env.DASHBOARD_PORT || 3000,
-  api: process.env.DASHBOARD_INTERNAL || 3001
+  api: process.env.DASHBOARD_PORT || 3000,
+  proxy: process.env.DASHBOARD_INTERNAL || 3001
 };
 
 /*
