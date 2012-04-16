@@ -16,6 +16,22 @@
   .script('/release/modules/module-main.js').wait()
   .wait(function() {
 
+    /**
+     * Make jsonp the default request method
+     */
+    Backbone.old_sync = Backbone.sync;
+    Backbone.sync = function(method, model, options) {
+      var opts = _.extend({
+        timeout: 10000,
+        dataType: 'jsonp'
+      }, options);
+
+      return Backbone.old_sync(method, model, opts);
+    };
+
+    /**
+     * Initialize dashboard
+     */
     $(document).ready(function() {
 
       var Dashboard = {
