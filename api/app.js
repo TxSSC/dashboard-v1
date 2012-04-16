@@ -6,13 +6,13 @@ var socket, app, staticContent,
     EventSub = require('node-redis-events').Subscriber,
     sockets = require('./sockets');
 
+
 /*
  * Start socketio and server
  */
 app = http.createServer(handler);
 socket = io.listen(app);
 app.listen(process.env.DASHBOARD_PORT || 3000);
-
 
 /*
  * Define our event subscriber object
@@ -21,7 +21,7 @@ app.subscriber = new EventSub({
   hostname: '127.0.0.1'
 });
 
-/*
+/**
  * define our namespace 'routes' we want to subscribe to
  *
  * `sockets.SocketController` returns a function for the
@@ -37,7 +37,7 @@ app.subscriber.add('stalker', sockets.Stalker(socket));
 staticContent = new StaticServer(path.join(__dirname, '../client'));
 
 /*
- * Default handler for the server
+ * Serve static files
  */
 function handler(req, res) {
   req.addListener('end', function() {
