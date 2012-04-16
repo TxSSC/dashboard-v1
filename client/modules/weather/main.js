@@ -24,16 +24,9 @@
       }, 600000);
     },
 
-    sync: function(method, model, options) {
-      options.timeout = 10000;
-      options.dataType = "jsonp";
-      return Backbone.sync(method, model, options);
-    },
-
     parse: function(response) {
       return response.current_observation; // set only current conditions into model
     }
-
   });
 
 
