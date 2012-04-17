@@ -1,11 +1,13 @@
 (function() {
+  var WEATHER_KEY = Config.weather_api_key,
+      WEATHER_CODE = Config.weather_zip_code;
 
   /*
    * Our weather model
    */
   var Weather = Backbone.Model.extend({
     url: function() {
-      return "http://api.wunderground.com/api/" + Config.weather_api_key + "/conditions/q/" + Config.weather_zip_code + ".json";
+      return "http://api.wunderground.com/api/" + WEATHER_KEY + "/conditions/q/" + WEATHER_CODE + ".json";
     },
 
     initialize: function() {
