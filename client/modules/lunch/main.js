@@ -2,7 +2,8 @@
   /**
    * Our global module variables
    */
-  var LUNCH_URL = Config.lunch_url;
+  var LUNCH_URL = Config.lunch_url,
+      socket = io.connect('/lunch');
 
   /*
    * The model for the lunch module
@@ -12,8 +13,7 @@
     url: LUNCH_URL + '/lunch',
 
     initialize: function() {
-      var self = this,
-          socket = io.connect('/lunch');
+      var self = this;
 
       //This looks like a bad idea
       socket.on('day:new', function(data) {
