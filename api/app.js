@@ -1,98 +1,17 @@
-var socket, app, staticContent, proxyServer, socketProxy,
+var socket, app, staticContent,
     http = require('http'),
-    httpProxy = require('http-proxy'),
     path = require('path'),
     io = require('socket.io'),
     StaticServer = require('node-static').Server,
     EventSub = require('node-redis-events').Subscriber,
     sockets = require('./sockets');
 
-
-/*
- * Set which port to run the proxy and internal
- * service on. ex. 3000 and 3001
- */
-var ports = {
-  proxy: process.env.DASHBOARD_PORT || 3000,
-  api: process.env.DASHBOARD_INTERNAL || 3001
-};
-
-/*
- * Internal http proxy for tickets and other apps,
- * our actual app runs on port 3001
- */
-proxyServer = httpProxy.createServer(function(req, res, proxy) {
-  /*
-   * Rewrite /ticket-system/api/... to /api/...
-   * and pass request to ticket-system
-   */
-  if(req.url.match(/\/ticket-system\/api\/?/)) {
-    /*
-     * Rewrite the url from /ticket-system/route* to /route*
-     */
-    req.url = req.url.replace(/\/ticket-system\//, '/');
-
-    /*
-     * Add the auth header
-     */
-    req.headers['X-Auth-Token'] = process.env.TICKETS_TOKEN || '';
-    proxy.proxyRequest(req, res, {
-      host: process.env.TICKETS_HOST,
-      port: process.env.TICKETS_PORT
-    });
-  }
-  /*
-   * Rewrite /stalker/
-   * and pass request to stalker API
-   */
-  else if(req.url.match(/\/stalker\//)) {
-    /*
-     * Rewrite the url from /stalker/route* to /route*
-     */
-    req.url = req.url.replace(/\/stalker\//, '/');
-
-    /*
-     * Add the auth header
-     */
-    proxy.proxyRequest(req, res, {
-      host: process.env.STALKER_HOST,
-      port: process.env.STALKER_PORT
-    });
-  }
-  else {
-    /*
-     * Proxy the request to the localhost
-     */
-    proxy.proxyRequest(req, res, {
-      host: 'localhost',
-      port: ports.api
-    });
-  }
-
-}).listen(ports.proxy);
-
-/*
- * Proxy the websocket connection, on upgrade event
- * proxy the connection to localhost:3001
- */
-socketProxy = new httpProxy.RoutingProxy();
-
-proxyServer.on('upgrade', function(req, socket, head) {
-  socketProxy.proxyWebSocketRequest(req, socket, head, {
-    host: 'localhost',
-    port: ports.api
-  });
-});
-
-
-/* App Serving logic */
-
 /*
  * Start socketio and server
  */
 app = http.createServer(handler);
 socket = io.listen(app);
-app.listen(ports.api);
+app.listen(process.env.DASHBOARD_PORT || 3000);
 
 
 /*
