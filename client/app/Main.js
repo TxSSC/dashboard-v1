@@ -16,6 +16,9 @@
   .script('/release/modules/module-main.js').wait()
   .wait(function() {
 
+    /**
+     * Initialize dashboard
+     */
     $(document).ready(function() {
 
       var Dashboard = {

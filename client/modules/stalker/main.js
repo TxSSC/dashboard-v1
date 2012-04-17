@@ -1,15 +1,14 @@
 (function() {
-
-  /*
-   * Our module socket connection
+  /**
+   * Our global module variables
    */
-  var socket = io.connect('/stalker');
+  var STALKER_URL = Config.stalker_api_url,
+      socket = io.connect('/stalker');
 
   /**
    * Stalker Module
    *
    */
-
   var Stalker = Backbone.Model.extend({
     idAttribute: "_id"
   });
@@ -17,7 +16,7 @@
 
   var StalkerCollection = Backbone.Collection.extend({
     model: Stalker,
-    url: '/stalker/users/',
+    url: STALKER_URL + '/users/',
 
     initialize: function() {
       var self = this;
