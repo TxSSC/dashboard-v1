@@ -15,15 +15,27 @@
    */
   var Users = Backbone.Collection.extend({
     model: User,
-    url: '/ticket-system/api/users/',
+    url: 'http://' + Config.ticket_host + '/api/users/',
 
     initialize: function() {
       var self = this;
+
       this.fetch({
         success: function() {
           self.trigger('ready');
         }
       });
+    },
+
+    sync: function(method, model, options) {
+      var newOptions = _.extend({
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader("Accept", "application/json");
+          xhr.setRequestHeader("X-Auth-Token", Config.ticket_token);
+        }
+      }, options);
+
+      return Backbone.sync(method, model, newOptions);
     }
   });
 
@@ -82,7 +94,7 @@
    */
   var Tickets = Backbone.Collection.extend({
     model: Ticket,
-    url: '/ticket-system/api/tickets/',
+    url: 'http://' + Config.ticket_host + '/api/tickets/',
 
     initialize: function() {
       var self = this;
@@ -134,6 +146,17 @@
         self.removeComment(data.ticket, data.comment);
       });
 
+    },
+
+    sync: function(method, model, options) {
+      var newOptions = _.extend({
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader("Accept", "application/json");
+          xhr.setRequestHeader("X-Auth-Token", Config.ticket_token);
+        }
+      }, options);
+
+      return Backbone.sync(method, model, newOptions);
     },
 
     /*
