@@ -46,7 +46,21 @@
   /*
    * Comment collection for each ticket
    */
-  var Comments = Backbone.Collection.extend({ model: Comment });
+  var Comments = Backbone.Collection.extend({
+    model: Comment,
+
+    sync: function(method, model, options) {
+      var newOptions = _.extend({
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader("Accept", "application/json");
+          xhr.setRequestHeader("X-Auth-Token", Config.ticket_token);
+        }
+      }, options);
+
+      return Backbone.sync(method, model, newOptions);
+    }
+
+  });
 
   /*
    * Base ticket model
@@ -70,7 +84,7 @@
     },
 
     setCommentURL: function() {
-      this.comments.url = '/ticket-system/api/tickets/' + this.id + '/comments';
+      this.comments.url = 'http://' + Config.ticket_host + '/api/tickets/' + this.id + '/comments';
     },
 
     commentCount: function() {
