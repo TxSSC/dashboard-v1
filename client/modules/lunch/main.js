@@ -1,12 +1,19 @@
 (function() {
+  /**
+   * Our global module variables
+   */
+  var LUNCH_URL = Config.lunch_url,
+      socket = io.connect('/lunch');
+
   /*
    * The model for the lunch module
    * Polls the server every 10 seconds
    */
   var Lunch = Backbone.Model.extend({
+    url: LUNCH_URL + '/lunch',
+
     initialize: function() {
-      var self = this,
-          socket = io.connect('/lunch');
+      var self = this;
 
       //This looks like a bad idea
       socket.on('day:new', function(data) {
@@ -14,6 +21,12 @@
       });
       socket.on('day:update', function(data) {
         self.set(data);
+      });
+
+      this.fetch({
+        success: function() {
+          self.trigger('fetch');
+        }
       });
     }
   });
@@ -28,12 +41,15 @@
     initialize: function() {
       this.model = new Lunch();
 
+      this.model.on('fetch', this.render, this);
       this.model.on('change:day', this.render, this);
       this.model.on('change:entities', this.renderPlot, this);
     },
 
     render: function() {
       this.renderPlot();
+
+      console.log(this.model);
 
       return this;
     },
