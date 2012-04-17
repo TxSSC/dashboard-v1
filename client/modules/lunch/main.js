@@ -2,7 +2,7 @@
   /**
    * Our global module variables
    */
-  var LUNCH_URL = Config.lunch_url,
+  var LUNCH_HOST = Config.lunch_host,
       socket = io.connect('/lunch');
 
   /*
@@ -10,7 +10,7 @@
    * Polls the server every 10 seconds
    */
   var Lunch = Backbone.Model.extend({
-    url: LUNCH_URL + '/lunch',
+    url: 'http://' + LUNCH_HOST + '/lunch',
 
     initialize: function() {
       var self = this;
@@ -48,8 +48,6 @@
 
     render: function() {
       this.renderPlot();
-
-      console.log(this.model);
 
       return this;
     },

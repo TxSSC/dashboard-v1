@@ -2,7 +2,7 @@
   /**
    * Our global module variables
    */
-  var STALKER_URL = Config.stalker_api_url,
+  var STALKER_HOST = Config.stalker_host,
       socket = io.connect('/stalker');
 
   /**
@@ -16,7 +16,7 @@
 
   var StalkerCollection = Backbone.Collection.extend({
     model: Stalker,
-    url: STALKER_URL + '/users/',
+    url: 'http://' + STALKER_HOST + '/users/',
 
     initialize: function() {
       var self = this;

@@ -1,8 +1,11 @@
 (function() {
   /*
-   * Our module socket connection
+   * Our global module variables
    */
-  var socket = io.connect('/tickets');
+  var TICKET_HOST = Config.ticket_host,
+      TICKET_TOKEN = Config.ticket_token,
+      TICKET_USERS = Config.ticket_users,
+      socket = io.connect('/tickets');
 
 
   /*
@@ -15,7 +18,7 @@
    */
   var Users = Backbone.Collection.extend({
     model: User,
-    url: 'http://' + Config.ticket_host + '/api/users/',
+    url: 'http://' + TICKET_HOST + '/api/users/',
 
     initialize: function() {
       var self = this;
@@ -31,7 +34,7 @@
       var newOptions = _.extend({
         beforeSend: function(xhr) {
           xhr.setRequestHeader("Accept", "application/json");
-          xhr.setRequestHeader("X-Auth-Token", Config.ticket_token);
+          xhr.setRequestHeader("X-Auth-Token", TICKET_TOKEN);
         }
       }, options);
 
@@ -53,7 +56,7 @@
       var newOptions = _.extend({
         beforeSend: function(xhr) {
           xhr.setRequestHeader("Accept", "application/json");
-          xhr.setRequestHeader("X-Auth-Token", Config.ticket_token);
+          xhr.setRequestHeader("X-Auth-Token", TICKET_TOKEN);
         }
       }, options);
 
@@ -84,7 +87,7 @@
     },
 
     setCommentURL: function() {
-      this.comments.url = 'http://' + Config.ticket_host + '/api/tickets/' + this.id + '/comments';
+      this.comments.url = 'http://' + TICKET_HOST + '/api/tickets/' + this.id + '/comments';
     },
 
     commentCount: function() {
@@ -108,7 +111,7 @@
    */
   var Tickets = Backbone.Collection.extend({
     model: Ticket,
-    url: 'http://' + Config.ticket_host + '/api/tickets/',
+    url: 'http://' + TICKET_HOST + '/api/tickets/',
 
     initialize: function() {
       var self = this;
@@ -166,7 +169,7 @@
       var newOptions = _.extend({
         beforeSend: function(xhr) {
           xhr.setRequestHeader("Accept", "application/json");
-          xhr.setRequestHeader("X-Auth-Token", Config.ticket_token);
+          xhr.setRequestHeader("X-Auth-Token", TICKET_TOKEN);
         }
       }, options);
 
@@ -426,16 +429,21 @@
     readyStatus: function() {
       if(this.readyFlag === true) {
         var self = this,
-            ticketUsers = Config.ticket_users;
+            remUsers = [],
+            ticketUsers = TICKET_USERS;
 
         this.users.each(function(user) {
           if(ticketUsers && !~ticketUsers.indexOf(user.id)) {
-            self.users.remove(user.id);
+            remUsers.push(user.id);
           }
         });
+        /*
+         * Prune the users
+         */
+        this.users.remove(remUsers);
 
-        this.calculateUsers();
-        this.render();
+        self.calculateUsers();
+        self.render();
       }
 
       this.readyFlag = true;
