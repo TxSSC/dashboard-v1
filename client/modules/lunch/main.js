@@ -34,7 +34,6 @@
 
   var MainView = Backbone.View.extend({
 
-    tagName: 'div',
     id: 'lunch',
     className: 'module small',
 
@@ -67,6 +66,9 @@
       var plot,
           self = this;
 
+      var weekday = self.model.get('day').substring(0,3),
+          day = self.model.get('day').substring(8,11);
+
       plot = new Highcharts.Chart({
         credits: {
           enabled: false
@@ -77,16 +79,22 @@
           plotShadow: false,
           backgroundColor: 'transparent',
           alignTicks: false,
-          spacingTop: 8,
+          spacingTop: 15,
           spacingRight: 40,
           spacingBottom: 8,
           spacingLeft: 8
         },
         title: {
-          text: self.model.get('day'),
+          text: '',
           style: {
-            color: '#DDD',
-            'font-size': '22px'
+            'font-family': '"Helvetica Neue", Helvetica, Arial, sans-serif',
+            'font-weight': 'bold',
+            'color': '#D3D4D4',
+            'font-size': '24px',
+            'text-align': 'center',
+            'padding': '0.3em 0',
+            'text-shadow' : 'none',
+            'border-bottom': '1px solid #151617'
           }
         },
         colors: [
@@ -99,11 +107,15 @@
           title: {
             text: 'Location',
             style: {
-              'color': '#AAA',
+              'font-family': '"Helvetica Neue", Helvetica, Arial, sans-serif',
+              'color': '#D3D4D4',
               'font-size': '16px',
               'font-weight': 'normal'
             }
-          }
+          },
+          lineColor: '#444',
+          tickColor: '#444',
+          tickWidth: 0
         },
         yAxis: {
           min: 0,
@@ -117,11 +129,14 @@
           title: {
             text: 'Rating',
             style: {
-              'color': '#AAA',
+              'font-family': '"Helvetica Neue", Helvetica, Arial, sans-serif',
+              'color': '#D3D4D4',
               'font-size': '16px',
               'font-weight': 'normal'
             }
-          }
+          },
+          gridLineColor: '#444',
+          lineColor: '#444'
         },
         legend: {
           layout: 'vertical',
@@ -129,12 +144,13 @@
           align: 'left',
           verticalAlign: 'top',
           x: 54,
-          y: 28,
+          y: 35,
           floating: true,
           shadow: true,
           itemStyle: {
-            'color': '#444',
-            'font-size': '18px',
+            'color': '#222',
+            'font-size': '14px',
+            'line-height': '1.2em',
             'text-shadow': 'none'
           }
         },
