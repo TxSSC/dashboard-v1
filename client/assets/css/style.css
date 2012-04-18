@@ -40,18 +40,18 @@ body {
 
 .tall {
   width: 24.5%;
-  height: 518px;
+  height: 560px;
   overflow: hidden;
 }
 
 .half {
   width: 49.5%;
-  height: 518px;
+  height: 560px;
   overflow: hidden;
 }
 
 .small {
-  width: 24.6%;
-  height: 256px;
+  width: 24.5%;
+  height: 277px;
   overflow: hidden;
 }

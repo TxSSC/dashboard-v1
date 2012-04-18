@@ -3,7 +3,7 @@
   #calendar .event {
     border-bottom:1px solid #151617;
     border-top:1px solid #303334;
-    height: 50px;
+    height: 54px;
     overflow: hidden;
   }
 
@@ -13,7 +13,7 @@
     #calendar .cal {
       width: 12%;
       float: left;
-      margin: 0.6em 1em;
+      margin: 0.7em 1em 0 1em;
     }
 
       #calendar .cal .month {
@@ -56,5 +56,5 @@
     font-size: 18px;
     font-weight: normal;
     text-shadow: none;
-    line-height: 2.8em;
+    line-height: 2.95em;
   }
