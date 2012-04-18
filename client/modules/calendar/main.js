@@ -27,7 +27,6 @@
 
       this.fetch({
         success: function(collection, response) {
-          console.log(response);
           self.trigger('fetch');
         }
       });
