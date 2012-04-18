@@ -54,37 +54,72 @@
         text-align: center;
       }
 
+  #tickets .anim-green {
+    -webkit-animation: green 60s ease-in 0 1;
+    -moz-animation: green 60s ease-in 0 1;
+    -animation: green 60s ease-in 0 1;
+  }
 
-  #tickets .changed {
-    -webkit-animation: changed-fade 60s ease-in 0 1;
-    -moz-animation: changed-fade 60s ease-in 0 1;
-    -animation: changed-fade 60s ease-in 0 1;
+  #tickets .anim-red {
+    -webkit-animation: red 60s ease-in 0 1;
+    -moz-animation: red 60s ease-in 0 1;
+    -animation: red 60s ease-in 0 1;
   }
 
 /*
- * Ticket changed animation
+ * Ticket change animations
  */
-@-webkit-keyframes changed-fade {
+@-webkit-keyframes green {
+  0% {
+    color: #0F0;
+  }
+
+  100% {
+    color: inherit;
+  }
+}
+
+@-moz-keyframes green {
+  0% {
+    color: #0F0;
+  }
+
+  100% {
+    color: inherit;
+  }
+}
+
+@keyframes green {
+  0% {
+    color: #0F0;
+  }
+
+  100% {
+    color: inherit;
+  }
+}
+
+@-webkit-keyframes red {
   0% {
     color: #F00;
   }
 
   100% {
-    color: #FFF;
+    color: inherit;
   }
 }
 
-@-moz-keyframes changed-fade {
+@-moz-keyframes red {
   0% {
     color: #F00;
   }
 
   100% {
-    color: #FFF;
+    color: inherit;
   }
 }
 
-@keyframes changed-fade {
+@keyframes red {
   0% {
     color: #F00;
   }

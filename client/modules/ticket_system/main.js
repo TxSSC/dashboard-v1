@@ -455,7 +455,8 @@
     className: "user clearfix",
 
     initialize: function() {
-      this.model.on('change', this.renderUpdate, this);
+      this.model.on('change:tickets', this.renderTicketUpdate, this);
+      this.model.on('change:comments', this.renderCommentUpdate, this);
       this.render();
     },
 
@@ -465,32 +466,62 @@
       return this;
     },
 
-    renderUpdate: function() {
-      var oldElement,
-          newElement;
+    renderTicketUpdate: function() {
+      var oldElement = $('.js-tickets', this.$el),
+          newElement = oldElement.clone(true);
 
-      /*
-       * Swap the element for a new one to retrigger the animation if
-       * the value has changed
+      /**
+       * Remove animation classes if present
        */
-      if(this.model.hasChanged('tickets')) {
-        oldElement = $('.js-tickets', this.$el);
-        newElement = oldElement.clone(true);
-
-        newElement.text(this.model.get('tickets'))
-                  .addClass('changed');
-        oldElement.before(newElement);
-        oldElement.remove();
+      if(newElement.hasClass('anim-green')) {
+        newElement.removeClass('anim-red');
       }
-      if(this.model.hasChanged('comments')) {
-        oldElement = $('.js-comments', this.$el);
-        newElement = oldElement.clone(true);
-
-        newElement.text(this.model.get('comments'))
-                  .addClass('changed');
-        oldElement.before(newElement);
-        oldElement.remove();
+      if(newElement.hasClass('anim-green')) {
+        newElement.removeClass('anim-red');
       }
+
+      /**
+       * Set the right animation if the count increased or decreased
+       */
+      if(this.model.previous('tickets') > this.model.get('tickets')) {
+        newElement.addClass('anim-green');
+      }
+      else {
+        newElement.addClass('anim-red');
+      }
+
+      newElement.html(this.model.get('tickets'));
+      oldElement.before(newElement);
+      oldElement.remove();
+    },
+
+    renderCommentUpdate: function() {
+      var oldElement = $('.js-comments', this.$el),
+          newElement = oldElement.clone(true);
+
+      /**
+       * Remove animation classes if present
+       */
+      if(newElement.hasClass('anim-green')) {
+        newElement.removeClass('anim-green');
+      }
+      if(newElement.hasClass('anim-red')) {
+        newElement.removeClass('anim-red');
+      }
+
+      /**
+       * Set the right animation if the count increased or decreased
+       */
+      if(this.model.previous('comments') > this.model.get('comments')) {
+        newElement.addClass('anim-green');
+      }
+      else {
+        newElement.addClass('anim-red');
+      }
+
+      newElement.html(this.model.get('comments'));
+      oldElement.before(newElement);
+      oldElement.remove();
     }
   });
 
