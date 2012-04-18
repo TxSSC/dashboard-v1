@@ -15,7 +15,7 @@
   var CalendarCollection = Backbone.Collection.extend({
 
     url: function() {
-      return "https://www.googleapis.com/calendar/v3/calendars/" + Config.google_calendar_id + "/events/?maxResults=5&singleEvents=true&orderBy=startTime&key=" + Config.google_api_key;
+      return "https://www.googleapis.com/calendar/v3/calendars/" + Config.google_calendar_id + "/events/?maxResults=6&singleEvents=true&orderBy=startTime&key=" + Config.google_api_key;
     },
 
     initialize: function() {
@@ -27,6 +27,7 @@
 
       this.fetch({
         success: function(collection, response) {
+          console.log(response);
           self.trigger('fetch');
         }
       });
