@@ -49,4 +49,7 @@
       #stalker .location {
         font-size: 2em;
         line-height: 40px;
+        width: 80%;
+        white-space: nowrap;
+        overflow: hidden;
       }
