@@ -4,12 +4,13 @@
     text-align: center;
     padding: 0.3em 0;
     text-shadow: none;
+    border-bottom:1px solid #151617;
   }
 
   #stalker ul.header {
     margin: 0;
     border-bottom:1px solid #151617;
-    border-top:1px solid #151617;
+    border-top:1px solid #303334;
     padding: 0.3em 1em;
   }
 

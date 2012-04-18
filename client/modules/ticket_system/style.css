@@ -1,63 +1,65 @@
 /* --------- Ticket System styles -------------- */
-#tickets h1 {
-  margin: 0 10%;
-  text-align: center;
-  margin-bottom: 3.14%;
-  border-bottom: 1px solid #888;
-}
+#tickets {}
 
-#tickets img {
-  width: 54px;
-  height: 54px;
-}
-
-#tickets .changed {
-  -webkit-animation: changed-fade 60s ease-in 0 1;
-  -moz-animation: changed-fade 60s ease-in 0 1;
-  -animation: changed-fade 60s ease-in 0 1;
-}
-
-#tickets .ticket-count-list {
-  list-style: none;
-  margin: 0 auto;
-  font-size: 26px;
-}
-
-#tickets .ticket-count-list li {
-  display: block;
-  border-bottom: 1px solid #444;
-  margin: 0 3%;
-  padding: 1% 4%;
-  padding-bottom: 2%;
-  white-space: nowrap;
-}
-
-#tickets .ticket-count-list span {
-  vertical-align: middle;
-  margin: 0 auto;
-  margin-left: 24%;
-}
-
-  #tickets .ticket-count-list li:first-child {
-    padding: 0;
+  #tickets h2 {
+    text-align: center;
+    padding: 0.3em 0;
+    text-shadow: none;
+    border-bottom:1px solid #151617;
   }
 
-  #tickets .ticket-count-list
-  li:first-child span {
-    font-size: 16px;
-    color: #666;
-    margin-left: 4%;
+  #tickets ul.header {
+    margin: 0;
+    border-bottom:1px solid #151617;
+    border-top:1px solid #303334;
+    padding: 0.3em 1em;
   }
 
-  #tickets .ticket-count-list
-  li span:first-child {
-    margin-left: 0;
-  }
-
-    #tickets .ticket-count-list
-    li:first-child span:first-child {
-      margin-left: 34%;
+    #tickets ul.header li {
+      list-style: none;
+      float: left;
+      text-shadow: none;
+      text-align: center;
+      width: 35%;
     }
+
+      #tickets ul.header li:first-child {
+        width: 50px;
+        margin-right: 2em;
+      }
+
+  #tickets .user {
+    padding: 0.6em 1em;
+    border-bottom:1px solid #151617;
+    border-top:1px solid #303334;
+  }
+
+    #tickets .user:first-child { border-top: 1px solid #303334; }
+    #tickets .user:last-child { border-bottom: none; }
+
+    #tickets .user span {
+      display: block;
+      float: left;
+    }
+
+      #tickets .user .avatar {
+        width: 50px;
+        margin-right: 2em;
+      }
+
+      #tickets .user .tickets, #tickets .user .comments {
+        font-size: 2em;
+        line-height: 38px;
+        width: 35%;
+        text-align: center;
+      }
+
+
+  #tickets .changed {
+    -webkit-animation: changed-fade 60s ease-in 0 1;
+    -moz-animation: changed-fade 60s ease-in 0 1;
+    -animation: changed-fade 60s ease-in 0 1;
+  }
 
 /*
  * Ticket changed animation

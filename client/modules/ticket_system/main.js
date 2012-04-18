@@ -318,55 +318,6 @@
     }
   });
 
-
-  /*
-   * Our user subview that contains the logic to render a user
-   *
-   * @model {User}
-   * @events {change:tickets}
-   */
-  var UserView = Backbone.View.extend({
-    tagName: 'li',
-
-    initialize: function() {
-      this.model.on('change', this.renderUpdate, this);
-    },
-
-    render: function() {
-      this.$el.html(Templates.ticket_system.user.render(this.model.toJSON()));
-
-      return this;
-    },
-
-    renderUpdate: function() {
-      var oldElement,
-          newElement;
-
-      /*
-       * Swap the element for a new one to retrigger the animation if
-       * the value has changed
-       */
-      if(this.model.hasChanged('tickets')) {
-        oldElement = $('.js-tickets', this.$el);
-        newElement = oldElement.clone(true);
-
-        newElement.text(this.model.get('tickets'))
-                  .addClass('changed');
-        oldElement.before(newElement);
-        oldElement.remove();
-      }
-      if(this.model.hasChanged('comments')) {
-        oldElement = $('.js-comments', this.$el);
-        newElement = oldElement.clone(true);
-
-        newElement.text(this.model.get('comments'))
-                  .addClass('changed');
-        oldElement.before(newElement);
-        oldElement.remove();
-      }
-    }
-  });
-
   /*
    * Kinda like a controller
    */
@@ -379,7 +330,6 @@
 
       this.users = new Users();
       this.tickets = new Tickets();
-      this.subViews = [];
       this.readyFlag = false;
 
       //Assuming this will take longer than the user fetch
@@ -399,27 +349,9 @@
         numNew: this.tickets.newCount()
       };
 
-      this.$el.html(Templates.ticket_system.base.render(data));
-      this.renderUsers();
-
-      return this;
-    },
-
-    renderUsers: function() {
-      var self = this,
-          users = this.users,
-          element = $('.ticket-count-list', this.$el);
-
-      this.users.each(function(user) {
-        var view = new UserView({
-          model: user
-        });
-
-        self.subViews.push(view);
-        element.append(view.render().el);
-      });
-
-      return this;
+      this.el.innerHTML = Templates.ticket_system.base.render(data);
+      var view = new UserListView({collection: this.users});
+      this.$el.append(view.el);
     },
 
     /*
@@ -484,6 +416,81 @@
           oldCount = parseInt(element.text(), 10);
 
       if(newCount !== oldCount) element.text(newCount);
+    }
+  });
+
+  /**
+   * User List View
+   */
+
+  var UserListView = Backbone.View.extend({
+    className: 'users_list',
+
+    initialize: function() {
+      this.render();
+      return this.el;
+    },
+
+    render: function() {
+      var self = this;
+
+      this.collection.each(function(user) {
+        var view = new UserView({
+          id: user.id,
+          model: user
+        });
+
+        self.$el.append(view.el);
+      });
+    }
+  });
+
+  /*
+   * Our user subview that contains the logic to render a user
+   *
+   * @model {User}
+   * @events {change:tickets}
+   */
+  var UserView = Backbone.View.extend({
+    className: "user clearfix",
+
+    initialize: function() {
+      this.model.on('change', this.renderUpdate, this);
+      this.render();
+    },
+
+    render: function() {
+      this.$el.html(Templates.ticket_system.user.render(this.model.toJSON()));
+
+      return this;
+    },
+
+    renderUpdate: function() {
+      var oldElement,
+          newElement;
+
+      /*
+       * Swap the element for a new one to retrigger the animation if
+       * the value has changed
+       */
+      if(this.model.hasChanged('tickets')) {
+        oldElement = $('.js-tickets', this.$el);
+        newElement = oldElement.clone(true);
+
+        newElement.text(this.model.get('tickets'))
+                  .addClass('changed');
+        oldElement.before(newElement);
+        oldElement.remove();
+      }
+      if(this.model.hasChanged('comments')) {
+        oldElement = $('.js-comments', this.$el);
+        newElement = oldElement.clone(true);
+
+        newElement.text(this.model.get('comments'))
+                  .addClass('changed');
+        oldElement.before(newElement);
+        oldElement.remove();
+      }
     }
   });
 
