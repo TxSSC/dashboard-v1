@@ -295,7 +295,7 @@
 
       if(ticket) {
         ticket.comments.add(comment);
-        this.trigger('comment:new', comment.user.id);
+        this.trigger('comment:new');
       }
     },
 
@@ -313,7 +313,7 @@
       if(ticket) {
         comment = ticket.comments.get(commentId);
         ticket.comments.remove(commentId);
-        this.trigger('comment:remove', comment.get('user').id);
+        this.trigger('comment:remove');
       }
     }
   });
@@ -339,7 +339,7 @@
       /*
        * Update the comments for a user, or the ticket counts for all users
        */
-      this.tickets.on('ticket:new', this.calculateNew, this);
+      this.tickets.on('ticket:new ticket:update ticket:remove', this.calculateNew, this);
       this.tickets.on('ticket:new ticket:update ticket:remove', this.calculateUsers, this);
       this.tickets.on('comment:new comment:remove', this.calculateUsers, this);
     },
@@ -387,19 +387,13 @@
      * @bind {comment:new}
      * @bind {comment:remove}
      */
-    calculateUsers: function(userId) {
+    calculateUsers: function() {
       var users = this.users,
-          tickets = this.tickets,
-          user = userId ? users.get(userId) : null;
+          tickets = this.tickets;
 
-      if(user) {
+      users.each(function(user) {
         user.set(tickets.userCount(user));
-      }
-      else {
-        users.each(function(user) {
-          user.set(tickets.userCount(user));
-        });
-      }
+      });
     },
 
     /*
