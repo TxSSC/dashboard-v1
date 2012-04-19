@@ -407,13 +407,11 @@
 
       element.html(newCount);
 
-      if(newCount !== 0 && !element.hasClass('red')) {
-        element.addClass('red');
+      if(newCount !== 0) {
+        if(!element.hasClass('red')) element.addClass('red');
       }
       else {
-        if(element.hasClass('red')) {
-          element.removeClass('red');
-        }
+        if(element.hasClass('red')) element.removeClass('red');
       }
     }
   });
