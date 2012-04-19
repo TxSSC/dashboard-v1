@@ -83,7 +83,7 @@
      * Is this a new ticket?
      */
     newStatus: function() {
-      return this.get('read') && this.get('read') === false;
+      return !this.get('read');
     },
 
     setCommentURL: function() {
@@ -345,11 +345,8 @@
     },
 
     render: function() {
-      var data = {
-        numNew: this.tickets.newCount()
-      };
-
-      this.el.innerHTML = Templates.ticket_system.base.render(data);
+      this.$el.html(Templates.ticket_system.base.render());
+      this.calculateNew();
       var view = new UserListView({collection: this.users});
       this.$el.append(view.el);
     },
@@ -412,10 +409,18 @@
      */
     calculateNew: function() {
       var newCount = this.tickets.newCount(),
-          element = $('.js-new', this.$el),
-          oldCount = parseInt(element.text(), 10);
+          element = $('.js-new', this.$el);
 
-      if(newCount !== oldCount) element.text(newCount);
+      element.html(newCount);
+
+      if(newCount !== 0 && !element.hasClass('red')) {
+        element.addClass('red');
+      }
+      else {
+        if(element.hasClass('red')) {
+          element.removeClass('red');
+        }
+      }
     }
   });
 
@@ -483,11 +488,11 @@
       /**
        * Set the right animation if the count increased or decreased
        */
-      if(this.model.previous('tickets') > this.model.get('tickets')) {
-        newElement.addClass('anim-green');
+      if(this.model.get('tickets') > this.model.previous('tickets')) {
+        newElement.addClass('anim-red');
       }
       else {
-        newElement.addClass('anim-red');
+        newElement.addClass('anim-green');
       }
 
       newElement.html(this.model.get('tickets'));
@@ -512,11 +517,11 @@
       /**
        * Set the right animation if the count increased or decreased
        */
-      if(this.model.previous('comments') > this.model.get('comments')) {
-        newElement.addClass('anim-green');
+      if(this.model.get('comments') < this.model.previous('comments')) {
+        newElement.addClass('anim-red');
       }
       else {
-        newElement.addClass('anim-red');
+        newElement.addClass('anim-green');
       }
 
       newElement.html(this.model.get('comments'));
