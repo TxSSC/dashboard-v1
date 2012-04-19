@@ -8,6 +8,14 @@
     border-bottom:1px solid #151617;
   }
 
+    #tickets h2 span {
+      margin-right: 0.2em;
+    }
+
+    #tickets h2 .red {
+      color: #F00;
+    }
+
   #tickets ul.header {
     margin: 0;
     border-bottom:1px solid #151617;
