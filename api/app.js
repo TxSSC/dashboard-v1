@@ -1,4 +1,4 @@
-var socket, app, staticContent,
+var socket, staticContent, app = {},
     http = require('http'),
     path = require('path'),
     EventEmitter = require('events').EventEmitter,
@@ -6,7 +6,8 @@ var socket, app, staticContent,
     director = require('director').http,
     StaticServer = require('node-static').Server,
     EventSub = require('node-redis-events').Subscriber,
-    sockets = require('./sockets');
+    sockets = require('./sockets'),
+    controllers = require('./controllers');
 
 
 /*
@@ -35,6 +36,17 @@ app.emitter = new EventEmitter();
 app.subscriber.add('tickets', sockets.Tickets(socket));
 app.subscriber.add('lunch', sockets.Lunch(socket));
 app.subscriber.add('stalker', sockets.Stalker(socket));
+
+/**
+ * Bind app events to a socket handler
+ */
+app.emitter.on('commandeer:command', sockets.Commandeer(socket)('commandeer:command'));
+
+
+/**
+ * Routes
+ */
+app.router.get(/commandeer\/?/, controllers.Commandeer);
 
 /*
  * Set up our static server
