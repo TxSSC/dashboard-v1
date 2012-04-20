@@ -30,7 +30,7 @@ module.exports = function(app) {
       /**
        * Validate the object and emit the command
        */
-      if(data.user && data.command && data.data) {
+      if(data.user && data.command) {
         app.emitter.emit('commandeer:command', data);
         this.res.writeHead(202, { 'Content-Type': 'application/json' });
       }
