@@ -13,6 +13,7 @@
     "node-static": ">=0.5.9",
     "socket.io": ">=0.9.5",
     "director": ">=1.0.9",
+    "union": ">=0.3.0",
     "node-redis-events": "git://github.com/vanetix/node-redis-events.git"
   },
   "scripts": {
