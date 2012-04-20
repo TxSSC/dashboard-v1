@@ -1,25 +1,30 @@
 var socket, app, staticContent,
     http = require('http'),
     path = require('path'),
+    EventEmitter = require('events').EventEmitter,
     io = require('socket.io'),
+    director = require('director').http,
     StaticServer = require('node-static').Server,
     EventSub = require('node-redis-events').Subscriber,
     sockets = require('./sockets');
 
 
 /*
- * Start socketio and server
+ * Initialize all objects on the app and start listening
  */
-app = http.createServer(handler);
-socket = io.listen(app);
-app.listen(process.env.DASHBOARD_PORT || 3000);
+app.router = new director.Router();
+app.http = http.createServer(handler);
+socket = app.socket = io.listen(app.http);
+app.http.listen(process.env.DASHBOARD_PORT || 3000);
 
 /*
- * Define our event subscriber object
+ * Define our event subscriber object, and event emitter
  */
 app.subscriber = new EventSub({
   hostname: '127.0.0.1'
 });
+app.emitter = new EventEmitter();
+
 
 /**
  * define our namespace 'routes' we want to subscribe to
@@ -40,7 +45,9 @@ staticContent = new StaticServer(path.join(__dirname, '../client'));
  * Serve static files
  */
 function handler(req, res) {
-  req.addListener('end', function() {
-    staticContent.serve(req, res);
+  app.router.dispatch(req, res, function(err) {
+    if(err) {
+      staticContent.serve(req, res);
+    }
   });
 }
