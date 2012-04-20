@@ -25,12 +25,20 @@ module.exports = function(app) {
      * }
      */
     this.post(/\/?/, function() {
-      var data = this.res.body;
+      var data = this.req.body;
 
       /**
-       * Send the data to the socket controller
+       * Validate the object and emit the command
        */
-      app.emitter.emit('dashboard:command', data);
+      if(data.user && data.command && data.data) {
+        app.emitter.emit('commandeer:command', data);
+        this.res.writeHead(202, { 'Content-Type': 'application/json' });
+      }
+      else {
+        this.res.writeHead(400);
+      }
+
+      this.res.end();
     });
 
   };

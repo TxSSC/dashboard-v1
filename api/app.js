@@ -1,5 +1,5 @@
-var socket, staticContent, app = {},
-    http = require('http'),
+var app = {},
+    union = require('union'),
     path = require('path'),
     EventEmitter = require('events').EventEmitter,
     io = require('socket.io'),
@@ -13,10 +13,13 @@ var socket, staticContent, app = {},
 /*
  * Initialize all objects on the app and start listening
  */
+app.staticServer = new StaticServer(path.join(__dirname, '../client'));
 app.router = new director.Router();
-app.http = http.createServer(handler);
-socket = app.socket = io.listen(app.http);
-app.http.listen(process.env.DASHBOARD_PORT || 3000);
+app.server = union.createServer({
+  before: [ handler ]
+});
+app.socket = io.listen(app.server);
+app.server.listen(process.env.DASHBOARD_PORT || 3000);
 
 /*
  * Define our event subscriber object, and event emitter
@@ -33,33 +36,33 @@ app.emitter = new EventEmitter();
  * `sockets.SocketController` returns a function for the
  *  subscriber to invoke
  */
-app.subscriber.add('tickets', sockets.Tickets(socket));
-app.subscriber.add('lunch', sockets.Lunch(socket));
-app.subscriber.add('stalker', sockets.Stalker(socket));
+app.subscriber.add('tickets', sockets.Tickets(app.socket));
+app.subscriber.add('lunch', sockets.Lunch(app.socket));
+app.subscriber.add('stalker', sockets.Stalker(app.socket));
 
 /**
  * Bind app events to a socket handler
  */
-app.emitter.on('commandeer:command', sockets.Commandeer(socket)('commandeer:command'));
+app.emitter.on('commandeer:command', sockets.Commandeer(app.socket)('commandeer:command'));
 
 
 /**
  * Routes
  */
-app.router.get(/commandeer\/?/, controllers.Commandeer);
+app.router.path(/commandeer\/?/, controllers.Commandeer(app));
 
 /*
  * Set up our static server
  */
-staticContent = new StaticServer(path.join(__dirname, '../client'));
+
 
 /*
- * Serve static files
+ * Default http handler
  */
 function handler(req, res) {
   app.router.dispatch(req, res, function(err) {
     if(err) {
-      staticContent.serve(req, res);
+      app.staticServer.serve(req, res);
     }
   });
 }

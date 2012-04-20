@@ -1,5 +1,3 @@
-module.exports = function(app) {
-  return {
-    Commandeer: require('./commandeer')(app)
-  };
+module.exports = {
+  Commandeer: require('./commandeer')
 };
