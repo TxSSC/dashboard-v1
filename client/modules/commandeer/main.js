@@ -31,10 +31,10 @@
      */
     watch: function() {
       var self = this;
-      this.$el.html(Templates.commandeer.youtube.render(this.model.toJSON()));
 
-      $('#main').fadeOut(200, function() {
-        $('body').prepend(self.$el);
+      this.$el.siblings().fadeOut(200, function() {
+        self.$el
+          .html(Templates.commandeer.youtube.render(self.model.toJSON()));
       });
     },
 
@@ -47,7 +47,7 @@
           break;
         case 'clear':
           this.$el.empty();
-          $('#main').fadeIn(200);
+          this.$el.siblings().fadeIn(200);
           break;
         default:
           break;
