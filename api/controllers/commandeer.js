@@ -1,6 +1,10 @@
 /**
- * Dashboard `remote` controller
+ * All the potential commands that the client side accepts
  */
+var COMMANDS = [
+  'watch',
+  'clear'
+];
 
 module.exports = function(app) {
   return function() {
@@ -30,12 +34,20 @@ module.exports = function(app) {
       /**
        * Validate the object and emit the command
        */
-      if(data.user && data.command) {
-        app.emitter.emit('commandeer:command', data);
-        this.res.writeHead(202, { 'Content-Type': 'application/json' });
+      if(data && data.user && data.command) {
+        if(~COMMANDS.indexOf(data.command)) {
+          app.emitter.emit('commandeer:command', data);
+          this.res.writeHead(202, { 'Content-Type': 'application/json' });
+          this.res.json({ success: 'command sent to dashboard' });
+        }
+        else {
+          this.res.writeHead(400);
+          this.res.json({ error: 'invalid command' });
+        }
       }
       else {
         this.res.writeHead(400);
+        this.res.json({ error: 'invalid command object'});
       }
 
       this.res.end();
