@@ -1,5 +1,7 @@
 /* -------- Global styles -------- */
 body {
+  height: 100%;
+  overflow:hidden;
   background: #111314;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
