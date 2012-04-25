@@ -18,7 +18,20 @@ app.router = new director.Router();
 app.server = union.createServer({
   before: [ handler ]
 });
+
+/**
+ * Configure socket.io
+ */
 app.socket = io.listen(app.server);
+app.socket.enable('browser client minification');
+app.socket.enable('browser client etag');
+app.socket.enable('browser client gzip');
+app.socket.set('log level', 1);
+app.socket.set('transports', [ 'websocket', 'xhr-polling' ]);
+
+/**
+ * Start listening on DASHBOARD_PORT
+ */
 app.server.listen(process.env.DASHBOARD_PORT || 3000);
 
 /*
