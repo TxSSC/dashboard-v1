@@ -10,7 +10,7 @@
    * Polls the server every 10 seconds
    */
   var Lunch = Backbone.Model.extend({
-    url: 'http://' + LUNCH_HOST + '/lunch',
+    url: 'http://' + LUNCH_HOST + '/day/today',
 
     initialize: function() {
       var self = this;
@@ -42,7 +42,7 @@
 
       this.model.on('fetch', this.render, this);
       this.model.on('change:day', this.render, this);
-      this.model.on('change:entities', this.renderPlot, this);
+      this.model.on('change:locations', this.renderPlot, this);
     },
 
     render: function() {
@@ -55,8 +55,8 @@
       var data,
           self = this;
 
-      data = this.model.get('entities').map(function(entity) {
-        return { name: entity.name, data: [ entity.rating ] };
+      data = this.model.get('locations').map(function(location) {
+        return { name: location.name, data: [ location.rating ] };
       });
 
       return data;
