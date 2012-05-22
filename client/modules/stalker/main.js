@@ -95,7 +95,7 @@
 
     initialize: function() {
       this.render(this.model);
-      this.model.on('change:location', this.update, this);
+      this.model.on('change:location change:returning', this.update, this);
       return this.el;
     },
 
@@ -105,7 +105,8 @@
       var data = {
         name: attributes.name,
         avatar: attributes.avatar,
-        location: attributes.location
+        location: attributes.location,
+        returning: attributes.returning
       };
 
       this.el.innerHTML = Templates.stalker.stalker.render(data);
@@ -113,6 +114,7 @@
 
     update: function() {
       $('.location', this.$el).html(this.model.get('location'));
+      $('.returning', this.$el).html(this.model.get('returning'));
     }
   });
 
