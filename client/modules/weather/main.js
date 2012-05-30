@@ -45,17 +45,20 @@
 
     // Render Date and Time
     initialize: function() {
+      var self = this;
 
-      var date = new Date(),
-          dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-          monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      this.data = this.getDate();
+      this.render();
 
-      var data = {
-        weekday: dayArray[date.getDay()], // returns 0-6 so grab array value
-        date: monthArray[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear()
-      };
+      setInterval(function() {
+        var data = self.getDate();
+        if(data !== self.data) self.render();
+      }, 3600000);
 
-      this.el.innerHTML = Templates.weather.date.render(data);
+    },
+
+    render: function() {
+      this.el.innerHTML = Templates.weather.date.render(this.data);
 
       // add weather
       new WeatherView({view: this});
@@ -63,6 +66,17 @@
       // add clock
       var clock = new ClockView();
       this.$el.append(clock.el);
+    },
+
+    getDate: function() {
+      var date = new Date(),
+          dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+      return {
+        weekday: dayArray[date.getDay()], // returns 0-6 so grab array value
+        date: monthArray[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear()
+      };
     }
   });
 
