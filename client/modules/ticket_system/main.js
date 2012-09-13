@@ -111,7 +111,7 @@
    */
   var Tickets = Backbone.Collection.extend({
     model: Ticket,
-    url: 'http://' + TICKET_HOST + '/api/tickets/',
+    url: 'http://' + TICKET_HOST + '/api/tickets?status=open',
 
     initialize: function() {
       var self = this;
