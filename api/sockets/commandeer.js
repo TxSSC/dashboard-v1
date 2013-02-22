@@ -11,7 +11,8 @@ module.exports = function(emitter, io) {
     'commandeer:command'
   ].forEach(function(event) {
     emitter.on(event, function() {
-      commandeer.emit.apply(commandeer, arguments);
+      var args = Array.prototype.slice.call(arguments);
+      commandeer.emit.apply(stalker, [event].concat(args));
     });
   });
 };

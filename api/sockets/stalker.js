@@ -12,7 +12,8 @@ module.exports = function(emitter, io) {
     'user:update'
   ].forEach(function(event) {
     emitter.on(event, function() {
-      stalker.emit.apply(stalker, Array.prototype.slice.call(arguments));
+      var args = Array.prototype.slice.call(arguments);
+      stalker.emit.apply(stalker, [event].concat(args));
     });
   });
 };

@@ -15,8 +15,9 @@ module.exports = function(emitter, io) {
     'comment:update',
     'comment:remove'
   ].forEach(function(event) {
-    emitter.addListener(event, function() {
-      tickets.emit.apply(tickets, Array.prototype.slice.call(arguments));
+    emitter.on(event, function() {
+      var args = Array.prototype.slice.call(arguments);
+      tickets.emit.apply(stalker, [event].concat(args));
     });
   });
 };

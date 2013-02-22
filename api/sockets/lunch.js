@@ -12,7 +12,8 @@ module.exports = function(emitter, io) {
     'day:update'
   ].forEach(function(event) {
     emitter.on(event, function() {
-      lunch.emit.apply(stalker, Array.prototype.slice.call(arguments));
+      var args = Array.prototype.slice.call(arguments);
+      lunch.emit.apply(stalker, [event].concat(args));
     });
   });
 };
