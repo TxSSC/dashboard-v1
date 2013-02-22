@@ -1,18 +1,19 @@
 var app = {},
-    union = require('union'),
     path = require('path'),
-    EventEmitter = require('events').EventEmitter,
+    union = require('union'),
     io = require('socket.io'),
-    director = require('director').http,
-    StaticServer = require('node-static').Server,
-    EventSub = require('node-redis-events').Subscriber,
     sockets = require('./sockets'),
-    controllers = require('./controllers');
+    director = require('director').http,
+    Emitter = require('node-redis-events'),
+    controllers = require('./controllers'),
+    redis = require('redis').createClient(),
+    StaticServer = require('node-static').Server;
 
 
 /*
- * Initialize all objects on the app and start listening
+ * Initialize all objects on the app
  */
+
 app.staticServer = new StaticServer(path.join(__dirname, '../client'));
 app.router = new director.Router();
 app.server = union.createServer({
@@ -32,42 +33,33 @@ app.socket.set('transports', [ 'websocket', 'xhr-polling' ]);
 /**
  * Start listening on DASHBOARD_PORT
  */
+
 app.server.listen(process.env.DASHBOARD_PORT || 3000);
 
-/*
- * Define our event subscriber object, and event emitter
+/**
+ * Define the emitter instance for the local application
  */
-app.subscriber = new EventSub({
-  hostname: '127.0.0.1'
+
+app.emitter = new Emitter({
+  redis: redis,
+  namespace: 'dashboard'
 });
-app.emitter = new EventEmitter();
-
 
 /**
- * define our namespace 'routes' we want to subscribe to
- *
- * `sockets.SocketController` returns a function for the
- *  subscriber to invoke
+ * Create our emitters for specific namespaces and
+ * initialize socket listeners.
  */
-app.subscriber.add('tickets', sockets.Tickets(app.socket));
-app.subscriber.add('lunch', sockets.Lunch(app.socket));
-app.subscriber.add('stalker', sockets.Stalker(app.socket));
 
-/**
- * Bind app events to a socket handler
- */
-app.emitter.on('commandeer:command', sockets.Commandeer(app.socket)('commandeer:command'));
-
+sockets.Commandeer(app.emitter, app.socket);
+sockets.Lunch(new Emitter({redis: redis, namespace: 'lunch'}), app.socket);
+sockets.Tickets(new Emitter({redis: redis, namespace: 'tickets'}), app.socket);
+sockets.Stalker(new Emitter({redis: redis, namespace: 'stalker'}), app.socket);
 
 /**
  * Routes
  */
+
 app.router.path(/commandeer\/?/, controllers.Commandeer(app));
-
-/*
- * Set up our static server
- */
-
 
 /*
  * Default http handler

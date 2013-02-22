@@ -1,6 +1,6 @@
 {
   "name": "TxSSC-Dashboard",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "author": "TxSSC",
   "private": true,
   "description": "a dashboard for txssc",
@@ -8,13 +8,12 @@
     "grunt"   : "0.2.15",
     "hogan.js": "2.0.0",
     "rimraf": "2.0.1",
-    "coffee-script": ">=1.2.0",
-    "clean-css": "0.3.2",
     "node-static": ">=0.5.9",
     "socket.io": ">=0.9.5",
     "director": ">=1.0.9",
     "union": ">=0.3.0",
-    "node-redis-events": "git://github.com/vanetix/node-redis-events.git"
+    "redis": "~0.8.0",
+    "node-redis-events": "~0.9.0"
   },
   "scripts": {
     "start": "node api/app.js"

@@ -1,27 +1,19 @@
-module.exports = function(io) {
+module.exports = function(emitter, io) {
   var stalker = io
   .of('/stalker')
   .on('connection', function(socket) {});
 
-  /*
-   * Process the event and pass the `data` we want to
-   * the client.
-   *
-   * @param {event} - The event that fired
-   * @param {data} - Object or string
-   *
-   * If `data` is an object, data.body is used
-   * If `data` is a string, the string itself is used
+  /**
+   * Add event listeners for `events` array
    */
-  function handler(event, data) {
-    if(typeof(data) === 'object' && ~event.indexOf('stalker') && data.body) {
-      data = data.body;
-    }
 
-    stalker.emit(event, data);
-  }
-
-
-  //Return handler as the main handler
-  return handler;
+  [
+    'user:save',
+    'user:update'
+  ].forEach(function(event) {
+    emitter.on(event, function() {
+      var args = Array.prototype.slice.call(arguments);
+      stalker.emit.apply(stalker, [event].concat(args));
+    });
+  });
 };
