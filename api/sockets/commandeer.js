@@ -4,17 +4,14 @@ module.exports = function(io) {
   .on('connection', function(socket) {});
 
   /**
-   * Simple handler to send data to the client
+   * Bind listeners for `events`
    */
-  function handler(event, data) {
-    commandeer.emit(event, data);
-  }
 
-
-  //Wrap handler to proxy the event
-  return function(event) {
-    return function(data) {
-      return handler(event, data);
-    };
-  };
+  [
+    'commandeer:command'
+  ].forEach(function(event) {
+    emitter.on(event, function() {
+      commandeer.emit.apply(commandeer, arguments);
+    });
+  });
 };
