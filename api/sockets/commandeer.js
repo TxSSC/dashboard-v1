@@ -1,20 +1,18 @@
-module.exports = function(io) {
+module.exports = function(emitter, io) {
   var commandeer = io
   .of('/commandeer')
   .on('connection', function(socket) {});
 
   /**
-   * Simple handler to send data to the client
+   * Bind listeners for `events`
    */
-  function handler(event, data) {
-    commandeer.emit(event, data);
-  }
 
-
-  //Wrap handler to proxy the event
-  return function(event) {
-    return function(data) {
-      return handler(event, data);
-    };
-  };
+  [
+    'commandeer:command'
+  ].forEach(function(event) {
+    emitter.on(event, function() {
+      var args = Array.prototype.slice.call(arguments);
+      commandeer.emit.apply(stalker, [event].concat(args));
+    });
+  });
 };
