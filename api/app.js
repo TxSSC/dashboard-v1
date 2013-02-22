@@ -10,8 +10,9 @@ var app = {},
 
 
 /*
- * Initialize all objects on the app and start listening
+ * Initialize all objects on the app
  */
+
 app.staticServer = new StaticServer(path.join(__dirname, '../client'));
 app.router = new director.Router();
 app.server = union.createServer({
@@ -31,10 +32,11 @@ app.socket.set('transports', [ 'websocket', 'xhr-polling' ]);
 /**
  * Start listening on DASHBOARD_PORT
  */
+
 app.server.listen(process.env.DASHBOARD_PORT || 3000);
 
 /**
- * Define the emitter instance
+ * Define the emitter instance for the local application
  */
 
 app.emitter = new Emitter({
@@ -42,29 +44,20 @@ app.emitter = new Emitter({
 });
 
 /**
- * Listen to our bind our socket events
+ * Create our emitters for specific namespaces and
+ * initialize socket listeners.
  */
 
-sockets.Lunch(app.emitter, app.socket);
-sockets.Tickets(app.emitter, app.socket);
-sockets.Stalker(app.emitter, app.socket);
-//sockets.Commandeer(app.emitter, app.socket);
-
-/**
- * Bind app events to a socket handler
- */
-
-
+sockets.Commandeer(app.emitter, app.socket);
+sockets.Lunch(new Emitter({namespace: 'lunch'}), app.socket);
+sockets.Tickets(new Emitter({namespace: 'tickets'}), app.socket);
+sockets.Stalker(new Emitter({namespace: 'stalker'}), app.socket);
 
 /**
  * Routes
  */
+
 app.router.path(/commandeer\/?/, controllers.Commandeer(app));
-
-/*
- * Set up our static server
- */
-
 
 /*
  * Default http handler
