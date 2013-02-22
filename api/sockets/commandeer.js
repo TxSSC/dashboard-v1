@@ -1,4 +1,4 @@
-module.exports = function(io) {
+module.exports = function(emitter, io) {
   var commandeer = io
   .of('/commandeer')
   .on('connection', function(socket) {});
