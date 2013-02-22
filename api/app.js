@@ -6,6 +6,7 @@ var app = {},
     director = require('director').http,
     Emitter = require('node-redis-events'),
     controllers = require('./controllers'),
+    redis = require('redis').createClient(),
     StaticServer = require('node-static').Server;
 
 
@@ -40,6 +41,7 @@ app.server.listen(process.env.DASHBOARD_PORT || 3000);
  */
 
 app.emitter = new Emitter({
+  redis: redis,
   namespace: 'dashboard'
 });
 
@@ -49,9 +51,9 @@ app.emitter = new Emitter({
  */
 
 sockets.Commandeer(app.emitter, app.socket);
-sockets.Lunch(new Emitter({namespace: 'lunch'}), app.socket);
-sockets.Tickets(new Emitter({namespace: 'tickets'}), app.socket);
-sockets.Stalker(new Emitter({namespace: 'stalker'}), app.socket);
+sockets.Lunch(new Emitter({redis: redis, namespace: 'lunch'}), app.socket);
+sockets.Tickets(new Emitter({redis: redis, namespace: 'tickets'}), app.socket);
+sockets.Stalker(new Emitter({redis: redis, namespace: 'stalker'}), app.socket);
 
 /**
  * Routes
