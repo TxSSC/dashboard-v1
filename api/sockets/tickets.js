@@ -1,27 +1,22 @@
-module.exports = function(io) {
+module.exports = function(emitter, io) {
   var tickets = io
   .of('/tickets')
   .on('connection', function(socket) {});
 
-  /*
-   * Process the event and pass the `data` we want to
-   * the client.
-   *
-   * @param {event} - The event that fired
-   * @param {data} - Object or string
-   *
-   * If `data` is an object, data.body is used
-   * If `data` is a string, the string itself is used
+  /**
+   * Add listeners from `event` array
    */
-  function handler(event, data) {
-    if(typeof(data) === 'object' && ~event.indexOf('ticket') && data.body) {
-      data = data.body;
-    }
 
-    tickets.emit(event, data);
-  }
-
-
-  //Return handler as the main handler
-  return handler;
+  [
+    'ticket:new',
+    'ticket:update',
+    'ticket:remove',
+    'comment:new',
+    'comment:update',
+    'comment:remove'
+  ].forEach(function(event) {
+    emitter.addListener(event, function() {
+      tickets.emit.apply(tickets, Array.prototype.slice.call(arguments));
+    });
+  });
 };

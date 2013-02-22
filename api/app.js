@@ -1,13 +1,12 @@
 var app = {},
-    union = require('union'),
     path = require('path'),
-    EventEmitter = require('events').EventEmitter,
+    union = require('union'),
     io = require('socket.io'),
-    director = require('director').http,
-    StaticServer = require('node-static').Server,
-    EventSub = require('node-redis-events').Subscriber,
     sockets = require('./sockets'),
-    controllers = require('./controllers');
+    director = require('director').http,
+    Emitter = require('node-redis-events'),
+    controllers = require('./controllers'),
+    StaticServer = require('node-static').Server;
 
 
 /*
@@ -34,29 +33,27 @@ app.socket.set('transports', [ 'websocket', 'xhr-polling' ]);
  */
 app.server.listen(process.env.DASHBOARD_PORT || 3000);
 
-/*
- * Define our event subscriber object, and event emitter
+/**
+ * Define the emitter instance
  */
-app.subscriber = new EventSub({
-  hostname: '127.0.0.1'
-});
-app.emitter = new EventEmitter();
 
+app.emitter = new Emitter({
+  namespace: 'dashboard'
+});
 
 /**
- * define our namespace 'routes' we want to subscribe to
- *
- * `sockets.SocketController` returns a function for the
- *  subscriber to invoke
+ * Listen to our bind our socket events
  */
-app.subscriber.add('tickets', sockets.Tickets(app.socket));
-app.subscriber.add('lunch', sockets.Lunch(app.socket));
-app.subscriber.add('stalker', sockets.Stalker(app.socket));
+
+sockets.Lunch(app.emitter, app.socket);
+sockets.Tickets(app.emitter, app.socket);
+sockets.Stalker(app.emitter, app.socket);
+//sockets.Commandeer(app.emitter, app.socket);
 
 /**
  * Bind app events to a socket handler
  */
-app.emitter.on('commandeer:command', sockets.Commandeer(app.socket)('commandeer:command'));
+
 
 
 /**

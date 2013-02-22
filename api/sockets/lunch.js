@@ -1,23 +1,19 @@
-var http = require('http');
-
-module.exports = function(io) {
+module.exports = function(emitter, io) {
   var lunch = io
   .of('/lunch')
   .on('connection', function(socket) {});
 
-  /*
-   * Process the event and pass the `data` we want to
-   * the client.
-   *
-   * @param {event} - The event that fired
-   * @param {data} - Object
+  /**
+   * Add event listeners for `events` array
    */
-  function handler(event, data) {
-    lunch.emit(event, data);
-  }
 
-  /*
-   * Return handler as the main handler
-   */
-  return handler;
+  [
+    /**
+     * Events placeholder
+     */
+  ].forEach(function(event) {
+    emitter.on(event, function() {
+      lunch.emit.apply(stalker, Array.prototype.slice.call(arguments));
+    });
+  });
 };
