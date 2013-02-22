@@ -8,7 +8,8 @@ module.exports = function(emitter, io) {
    */
 
   [
-    'user:new'
+    'user:save',
+    'user:update'
   ].forEach(function(event) {
     emitter.on(event, function() {
       stalker.emit.apply(stalker, Array.prototype.slice.call(arguments));

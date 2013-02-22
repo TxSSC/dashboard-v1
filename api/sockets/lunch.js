@@ -8,9 +8,8 @@ module.exports = function(emitter, io) {
    */
 
   [
-    /**
-     * Events placeholder
-     */
+    'day:new',
+    'day:update'
   ].forEach(function(event) {
     emitter.on(event, function() {
       lunch.emit.apply(stalker, Array.prototype.slice.call(arguments));
