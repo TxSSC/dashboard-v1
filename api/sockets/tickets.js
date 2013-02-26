@@ -17,7 +17,7 @@ module.exports = function(emitter, io) {
   ].forEach(function(event) {
     emitter.on(event, function() {
       var args = Array.prototype.slice.call(arguments);
-      tickets.emit.apply(stalker, [event].concat(args));
+      tickets.emit.apply(tickets, [event].concat(args));
     });
   });
 };
