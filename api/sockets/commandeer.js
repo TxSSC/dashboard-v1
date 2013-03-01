@@ -12,7 +12,7 @@ module.exports = function(emitter, io) {
   ].forEach(function(event) {
     emitter.on(event, function() {
       var args = Array.prototype.slice.call(arguments);
-      commandeer.emit.apply(stalker, [event].concat(args));
+      commandeer.emit.apply(commandeer, [event].concat(args));
     });
   });
 };
