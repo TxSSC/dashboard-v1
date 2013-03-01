@@ -1,23 +1,18 @@
 (function() {
+
   /*
    * Our global module variables
    */
+
   var TICKET_HOST = Config.ticket_host,
       TICKET_TOKEN = Config.ticket_token,
       TICKET_USERS = Config.ticket_users,
       socket = io.connect('/tickets');
 
-
-  /*
-   * Base User model
-   */
-  var User = Backbone.Model.extend({});
-
   /*
    * User Collection, calls fetch on initialize
    */
   var Users = Backbone.Collection.extend({
-    model: User,
     url: 'http://' + TICKET_HOST + '/api/users/',
 
     initialize: function() {
@@ -43,15 +38,9 @@
   });
 
   /*
-   * Base comment model
-   */
-  var Comment = Backbone.Model.extend({});
-  /*
    * Comment collection for each ticket
    */
   var Comments = Backbone.Collection.extend({
-    model: Comment,
-
     sync: function(method, model, options) {
       var newOptions = _.extend({
         beforeSend: function(xhr) {
@@ -133,14 +122,14 @@
        * add a new ticket on ticket:new event
        */
       socket.on('ticket:new', function(data) {
-        self.add(data);
+        self.add(data.body);
         self.trigger('ticket:new');
       });
       /*
        * Update a ticket on ticket:update event
        */
       socket.on('ticket:update', function(data) {
-        self.updateTicket(data);
+        self.updateTicket(data.body);
       });
       /*
        * Remove a ticket on ticket:remove event
@@ -526,6 +515,7 @@
   /*
    * Return our main view
    */
+
   return TicketsController;
 
 }).call(this);
